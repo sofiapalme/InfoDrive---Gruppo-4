@@ -72,6 +72,6 @@ at http://localhost:8080/some-page?name=World
 
 ### REST Qute
 
-Create your web page using Quarkus REST and Qute
+Create your org.example.web page using Quarkus REST and Qute
 
 [Related guide section...](https://quarkus.io/guides/qute#type-safe-templates)
