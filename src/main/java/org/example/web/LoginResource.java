@@ -5,11 +5,11 @@ import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
-@Path("/employeeLogin")
-public class EmployeeLoginResource {
+@Path("/")
+public class LoginResource {
     private final Template employeeLogin;
 
-    public EmployeeLoginResource(Template employeeLogin) {
+    public LoginResource(Template employeeLogin) {
         this.employeeLogin = employeeLogin;
     }
 
