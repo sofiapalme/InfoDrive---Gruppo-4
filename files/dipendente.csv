@@ -1,0 +1,16 @@
+nome;cognome;email;password;ruolo;id
+Mario;Rossi;mario.rossi@azienda.com;password1;portineria;1
+Luca;Bianchi;luca.bianchi@azienda.com;password2;dipendente;2
+Giulia;Verdi;giulia.verdi@azienda.com;password3;dipendente;3
+Francesca;Neri;francesca.neri@azienda.com;password4;portineria;4
+Alessandro;Galli;alessandro.galli@azienda.com;password5;dipendente;5
+Elena;Moretti;elena.moretti@azienda.com;password6;portineria;6
+Matteo;Russo;matteo.russo@azienda.com;password7;dipendente;7
+Sara;Conti;sara.conti@azienda.com;password8;portineria;8
+Davide;De Luca;davide.deluca@azienda.com;password9;dipendente;9
+Simone;Mancini;simone.mancini@azienda.com;password10;portineria;10
+Chiara;Barbieri;chiara.barbieri@azienda.com;password11;dipendente;11
+Stefano;Romano;stefano.romano@azienda.com;password12;portineria;12
+Martina;Ferrari;martina.ferrari@azienda.com;password13;dipendente;13
+Giorgio;Fabbri;giorgio.fabbri@azienda.com;password14;portineria;14
+Valentina;Rinaldi;valentina.rinaldi@azienda.com;password15;dipendente;15

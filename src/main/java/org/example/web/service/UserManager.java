@@ -3,14 +3,18 @@ package org.example.web.service;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 @ApplicationScoped
 public class UserManager {
 
-    public boolean loginCheckPassword(String inputEmail, String inputPassword) {
-        try (BufferedReader br = new BufferedReader(new FileReader("csv/dipendente.csv"))) {
+    public String loginCheckPassword(String inputEmail, String inputPassword) {
+        String filePath = Paths.get("files", "dipendente.csv").toString();
+        File f = new File(filePath);
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -19,16 +23,23 @@ public class UserManager {
                 if (credentials.length >= 6) {
                     String email = credentials[2].trim();
                     String password = credentials[3].trim();
+                    String role = credentials[4].trim();
 
                     if (email.equals(inputEmail) && password.equals(inputPassword)) {
-                        return true;
+                        if(role.equals("portineria")) {
+                            return "portineria";
+                        }
+                        else
+                        {
+                            return "dipendente";
+                        }
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
 
     }
 }

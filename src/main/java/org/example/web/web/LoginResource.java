@@ -10,6 +10,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,6 +19,7 @@ import java.net.URI;
 @Path("/")
 public class LoginResource {
 
+    private static final Logger log = LoggerFactory.getLogger(LoginResource.class);
     private final Template login;
     private final UserManager utentiManager;
     private final SessionManager sessionManager;
@@ -29,7 +32,7 @@ public class LoginResource {
 
     @GET
     public TemplateInstance mostraPaginaLogin() {
-        return login.instance();
+        return login.data("message", null);
     }
 
     @POST
@@ -38,8 +41,8 @@ public class LoginResource {
             @FormParam("password") String password
     ) throws IOException {
         String messaggioErrore = null;
-
-        if (!utentiManager.loginCheckPassword(email, password)) {
+        String result = utentiManager.loginCheckPassword(email, password);
+        if (result == null) {
             messaggioErrore = "Email o password non validi";
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity(login.data("message", messaggioErrore))
@@ -47,9 +50,19 @@ public class LoginResource {
         }
 
         NewCookie sessionCookie = sessionManager.createUserSession(email);
-        return Response
-                .seeOther(URI.create("/"))
-                .cookie(sessionCookie)
-                .build();
+        if(result.equals("portineria"))
+        {
+            return Response
+                    .seeOther(URI.create("/portineriaProfile"))
+                    .cookie(sessionCookie)
+                    .build();
+        }
+        else
+        {
+            return Response
+                    .seeOther(URI.create("/employeeProfile"))
+                    .cookie(sessionCookie)
+                    .build();
+        }
     }
 }
