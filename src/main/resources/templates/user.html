@@ -67,8 +67,11 @@
             width: 40%;
         }
     </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anagrafa Utente</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 <header>
     <span class="azienda">NomeAzienda</span>
     <div class="buttons">
@@ -80,10 +83,18 @@
 <main>
     <div class="container">
         <h2>Anagrafa Utente</h2>
-        <form>
-            <input type="text" placeholder="nome">
-            <input type="text" placeholder="cognome">
-            <input type="email" placeholder="email">
+        <form action="/user" method="POST">
+            <label for="nome">
+                Nome:
+                <input type="text" id="nome" name="nome" required="required">
+            </label>
+
+            <label for="cognome">Cognome:</label>
+            <input type="text" id="cognome" name="cognome" placeholder="cognome" required="required">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="email" required="required">
+
             <div class="buttons-container">
                 <button type="submit" class="btn big">anagrafa</button>
                 <button type="reset" class="btn big">reset</button>
@@ -91,5 +102,4 @@
         </form>
     </div>
 </main>
-</body>
 </html>
