@@ -43,13 +43,17 @@
 
 
         form input {
-            width: 90%;
+            width: 100%;
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid black;
-            margin-left: auto;
-            margin-right: auto;
+        }
+
+        .errorMsg{
+            margin-top: -15px;
+            color: red;
+            font-size: 20px;
         }
 
         .containerButton {
@@ -95,23 +99,22 @@
 <body>
 <h1>NomeAzienda</h1>
     <div class="container">
-        <form method="post" action="/">
+        <form action="/" method="post">
             <header>
                 <h2>Accedi</h2>
             </header>
-            <label for="username">Username<input type="text" name="username" id="username" required="required"></label>
+            <label for="username">Emailㅤㅤ<input type="text" name="email" id="username" required="required"></label>
             <br>
             <label for="password">Password<input type="password" minlength="" name="password" id="password" required="required"></label>
             <br>
-            {#if !message == null}
-                <h2>{message}</h2>
+            {#if message}
+                <p class="errorMsg">{message}</p>
             {/if}
             <div class="containerButton">
-                <button type="reset">Cancella</button>
                 <button type="submit">Accedi</button>
+                <button type="reset">Cancella</button>
             </div>
         </form>
     </div>
-
 </body>
 </html>

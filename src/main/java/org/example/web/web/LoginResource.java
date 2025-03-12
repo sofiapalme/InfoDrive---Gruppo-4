@@ -32,6 +32,7 @@ public class LoginResource {
 
     @GET
     public TemplateInstance mostraPaginaLogin() {
+        System.out.println("1");
         return login.data("message", null);
     }
 
@@ -40,12 +41,10 @@ public class LoginResource {
             @FormParam("email") String email,
             @FormParam("password") String password
     ) throws IOException {
-        String messaggioErrore = null;
         String result = utentiManager.loginCheckPassword(email, password);
         if (result == null) {
-            messaggioErrore = "Email o password non validi";
             return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity(login.data("message", messaggioErrore))
+                    .entity(login.data("message", "Email o password non validi"))
                     .build();
         }
 
