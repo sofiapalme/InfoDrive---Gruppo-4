@@ -41,4 +41,30 @@ public class UserManager {
         }
         return null;
     }
+    public String getNomeCognomeByEmail(String emailInput) {
+        String filePath = Paths.get("files", "dipendente.csv").toString();
+        File f = new File(filePath);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] dati = line.split(";");
+
+                if (dati.length >= 5) {
+                    String email = dati[2].trim();
+                    String nome = dati[0].trim();
+                    String cognome = dati[1].trim();
+
+                    if (email.equals(emailInput)) {
+                        return nome + " " + cognome;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

@@ -24,10 +24,10 @@ public class LoginResource {
     private final UserManager utentiManager;
     private final SessionManager sessionManager;
 
-    public LoginResource(Template login, UserManager userManager) {
+    public LoginResource(Template login, UserManager userManager, SessionManager sessionManager) {
         this.login = login;
         this.utentiManager = userManager;
-        this.sessionManager = new SessionManager();
+        this.sessionManager = sessionManager;
     }
 
     @GET
@@ -41,23 +41,24 @@ public class LoginResource {
             @FormParam("email") String email,
             @FormParam("password") String password
     ) throws IOException {
+        String messaggioErrore = null;
         String result = utentiManager.loginCheckPassword(email, password);
         if (result == null) {
+            messaggioErrore = "Email o password non validi";
             return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity(login.data("message", "Email o password non validi"))
+                    .entity(login.data("message", messaggioErrore))
                     .build();
         }
 
-        NewCookie sessionCookie = sessionManager.createUserSession(email);
-        if(result.equals("portineria"))
-        {
+        NewCookie sessionCookie = sessionManager.createUserSession(email); // Crea la sessione
+        log.info("valore cookie " + sessionCookie);
+
+        if(result.equals("portineria")) {
             return Response
-                    .seeOther(URI.create("/portineriaProfile"))
+                    .seeOther(URI.create("/receptionProfile"))
                     .cookie(sessionCookie)
                     .build();
-        }
-        else
-        {
+        } else {
             return Response
                     .seeOther(URI.create("/employeeProfile"))
                     .cookie(sessionCookie)
