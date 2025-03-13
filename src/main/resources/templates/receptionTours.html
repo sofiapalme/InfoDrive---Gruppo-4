@@ -4,16 +4,89 @@
     <meta charset="UTF-8">
     <title>ReceptionTours</title>
 </head>
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #382673;
+    }
+    h1{
+        font-size: 50px;
+    }
+    .tour-wrapper{
+        height: 40rem;
+        background-color: red;
+        overflow-y: scroll;
+    }
+    .tour-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        cursor: default;
+        font-size: 30px;
+        border: 2px solid black;
+        border-radius: 20px;
+        margin-bottom: 1rem;
+    }
+    .container-header{
+        height: 2.5rem;
+        background-color: lightcoral;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 75px;
+        border-bottom: 1px solid black;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        padding: 0.75rem;
+    }
+    .container-data{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+    }
+</style>
 <body>
 <h1>Lista delle visite</h1>
-  {#for tour in tourList}
-    <div>
-        <p>{tour.id}</p>
-        <p>{tour.startDateTime}</p>
-        <p>{tour.endDateTime}</p>
-        <p>{tour.employeeFk}</p>
-        <p>{tour.userFk}</p>
-    </div>
-  {/for}
+<div class="tour-wrapper">
+    {#for tour in tourList}
+        <div class = "tour-container">
+            <div class="container-header">
+                <p>id</p>
+                <p>inizio</p>
+                <p>fine</p>
+                <p>dipendente</p>
+                <p>cliente</p>
+            </div>
+            <div class="container-data">
+                <p>{tour.id}</p>
+                <p class="startDT">{tour.startDateTime}</p>
+                <p class="endDT">{tour.endDateTime}</p>
+                <p>{tour.employeeFk}</p>
+                <p>{tour.userFk}</p>
+            </div>
+        </div>
+    {/for}
+</div>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+            const startDts = document.querySelectorAll(".startDT");
+        const endDts = document.querySelectorAll(".endDT");
+
+        startDts.forEach(startDt => {
+            const formattedStartDt = startDt.innerText.replace("T", " ");
+            startDt.innerText = formattedStartDt;
+        });
+
+        endDts.forEach(endDt => {
+            const formattedEndDt = endDt.innerText.replace("T", " ");
+            endDt.innerText = formattedEndDt;
+        });
+    });
+</script>
 </body>
 </html>
