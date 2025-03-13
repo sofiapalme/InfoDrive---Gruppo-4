@@ -1,33 +1,97 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anagrafa Utente</title>
-    <link rel="stylesheet" href="StyleUtente.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anagrafa Utente</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      font-size: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: 1px solid black;
+      background: white;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .container {
+      background: white;
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 20px;
+      width: 50%;
+      margin: 50px auto;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid black;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .buttons-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .big {
+      width: 40%;
+    }
+  </style>
 </head>
 <body>
 <header>
-    <span class="azienda">NomeAzienda</span>
-    <div class="buttons">
-        <button class="btn">logout</button>
-        <button class="btn">home</button>
-    </div>
+  <span class="azienda">NomeAzienda</span>
+  <div class="buttons">
+    <button class="btn">logout</button>
+    <form action="/user/redirectToHome" method="get">
+      <button class="btn" type="submit">Home</button>
+    </form>
+  </div>
 </header>
 
 <main>
-    <div class="container">
-        <h2>Anagrafa Utente</h2>
-        <form>
-            <input type="text" placeholder="nome">
-            <input type="text" placeholder="cognome">
-            <input type="email" placeholder="email">
-            <div class="buttons-container">
-                <button type="submit" class="btn big">anagrafa</button>
-                <button type="reset" class="btn big">reset</button>
-            </div>
-        </form>
-    </div>
+  <div class="container">
+    <h2>Anagrafa Utente</h2>
+    <form action="/user" method="post">
+      <input type="text" name="nome" placeholder="Nome" required>
+      <input type="text" name="cognome" placeholder="Cognome" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <div class="buttons-container">
+        <button type="submit" class="btn big">Anagrafa</button>
+        <button type="reset" class="btn big">Reset</button>
+      </div>
+    </form>
+  </div>
 </main>
 </body>
 </html>

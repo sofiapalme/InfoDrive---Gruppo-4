@@ -88,17 +88,42 @@
         margin: 5px 0;
       }
     }
+
+    .button-container {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn:hover {
+        background-color: #45a049;
+    }
   </style>
 </head>
 <body>
+<div class="button-container">
+    <button class="btn">Logout</button>
+</div>
 <h1>NomeAzienda</h1>
 <div class="container">
-  <form method="post" action="/">
     <header>
       <h2>Benvenuto, {userName}!</h2>
     </header>
-
-  </form>
+    <form action="/receptionProfile/redirectToUser" method="get">
+        <button type="submit">Vai a UserResource</button>
+    </form>
 </div>
 </body>
 </html>

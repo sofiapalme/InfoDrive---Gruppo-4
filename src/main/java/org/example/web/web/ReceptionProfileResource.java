@@ -5,11 +5,14 @@ import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
 import org.example.web.service.UserManager;
 import org.example.web.web.service.SessionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.URI;
 
 @Path("/receptionProfile")
 public class ReceptionProfileResource {
@@ -42,7 +45,6 @@ public class ReceptionProfileResource {
             return receptionProfile.data("userName", "Ospite");
         }
 
-        // Ottenere Nome e Cognome
         String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
         log.info("Nome e cognome recuperati: " + nomeCognome);
 
@@ -51,7 +53,13 @@ public class ReceptionProfileResource {
             nomeCognome = "Utente Sconosciuto";
         }
 
-        return receptionProfile.data("userName", nomeCognome);  // Passato il nome completo all'HTML
+        return receptionProfile.data("userName", nomeCognome);
+    }
+
+    @GET
+    @Path("/redirectToUser")
+    public Response redirectToUser() {
+        return Response.seeOther(URI.create("/user")).build();
     }
 
 }
