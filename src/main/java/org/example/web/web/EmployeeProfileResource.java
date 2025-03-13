@@ -3,13 +3,8 @@ package org.example.web.web;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.NewCookie;
-import jakarta.ws.rs.core.Response;
 import org.example.web.service.UserManager;
 import org.example.web.web.service.SessionManager;
-
-import java.io.IOException;
-import java.net.URI;
 
 @Path("/employeeProfile")
 public class EmployeeProfileResource {
@@ -24,15 +19,16 @@ public class EmployeeProfileResource {
     }
 
     @GET
-    public TemplateInstance renderEmployeeProfile(
-            @CookieParam("Sessione") String idSession
-    ) {
-        String userEmail = sessionManager.getUserFromSession(idSession);
+    public TemplateInstance renderEmployeeProfile(@CookieParam("Sessione") String idSession) {
+        sessionManager.checkUserSession(idSession);
 
+        String userEmail = sessionManager.getUserFromSession(idSession);
         String userName = userManager.getNomeCognomeByEmail(userEmail);
 
         return employeeProfile.data("userName", userName);
     }
-
 }
+
+
+
 
