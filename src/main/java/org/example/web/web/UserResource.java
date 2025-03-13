@@ -32,19 +32,39 @@ public class UserResource {
             @FormParam("cognome") String surname,
             @FormParam("email") String email
     )
-
     {
-        String path = Paths.get("files","users.csv").toString();
+        String path = Paths.get("files", "users.csv").toString();
         File file = new File(path);
-        try(FileWriter w = new FileWriter(file,true))
-        {
-            w.write("\n" + name + ";" + surname + ";" + email);
+        int lastId = 0;
+
+        // Leggere l'ultimo ID dal file
+        if (file.exists()) {
+            try (var reader = new java.io.BufferedReader(new java.io.FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(";");
+                    if (parts.length > 0) {
+                        try {
+                            int id = Integer.parseInt(parts[0]);
+                            if (id > lastId) {
+                                lastId = id;
+                            }
+                        } catch (NumberFormatException ignored) {}
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        catch (IOException e)
-        {
+
+        int newId = lastId + 1;
+
+        // Scrivere il nuovo utente nel file
+        try (FileWriter w = new FileWriter(file, true);
+             BufferedWriter bw = new BufferedWriter(w)) {
+            bw.write("\n" + name + ";" + surname + ";" + email + ";" + newId);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }
