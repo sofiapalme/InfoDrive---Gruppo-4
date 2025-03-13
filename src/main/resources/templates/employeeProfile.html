@@ -89,20 +89,29 @@
             }
         }
     </style>
+
 </head>
 <body>
-    <h1>NomeAzienda</h1>
-    <div class="container">
-        <header><h2>Benvenuto {userName}</h2></header>
-        <div class="containerButton">
-            <button>Annulla visita</button>
-            <button>Aggiungi visita</button>
-            <button>Anagrafica nuovo cliente</button>
+<h1>NomeAzienda</h1>
+<div class="container">
+    <header><h2>Benvenuto {userName}</h2></header>
+    <div class="containerButton">
+        <button>Annulla visita</button>
+        <button>Aggiungi visita</button>
+        <button>Anagrafica nuovo cliente</button>
 
-            <form method="POST" action="/logout">
-                <button type="submit">Logout</button>
-            </form>
-        </div>
+        <form method="POST" action="/logout">
+            <button type="submit">Logout</button>
+        </form>
     </div>
+</div>
+
+<script>
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
 </body>
 </html>
