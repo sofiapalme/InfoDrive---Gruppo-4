@@ -93,12 +93,12 @@
 <body>
 <h1>NomeAzienda</h1>
 <div class="container">
-  <form method="post" action="/">
     <header>
       <h2>Benvenuto, {userName}!</h2>
     </header>
-
-  </form>
+    <form action="/receptionProfile/redirectToUser" method="get">
+        <button type="submit">Vai a UserResource</button>
+    </form>
 </div>
 </body>
 </html>
