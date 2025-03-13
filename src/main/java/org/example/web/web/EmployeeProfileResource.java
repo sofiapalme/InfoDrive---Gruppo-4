@@ -2,19 +2,37 @@ package org.example.web.web;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.NewCookie;
+import jakarta.ws.rs.core.Response;
+import org.example.web.service.UserManager;
+import org.example.web.web.service.SessionManager;
+
+import java.io.IOException;
+import java.net.URI;
 
 @Path("/employeeProfile")
 public class EmployeeProfileResource {
     private final Template employeeProfile;
+    private final UserManager userManager;
+    private final SessionManager sessionManager;
 
-    public EmployeeProfileResource(Template employeeProfile) {
+    public EmployeeProfileResource(Template employeeProfile, UserManager userManager, SessionManager sessionManager) {
         this.employeeProfile = employeeProfile;
+        this.userManager = userManager;
+        this.sessionManager = sessionManager;
     }
 
     @GET
-    public TemplateInstance renderEmployeeProfile() {
-        return employeeProfile.instance();
+    public TemplateInstance renderEmployeeProfile(
+            @CookieParam("Sessione") String idSession
+    ) {
+        String userEmail = sessionManager.getUserFromSession(idSession);
+
+        String userName = userManager.getNomeCognomeByEmail(userEmail);
+
+        return employeeProfile.data("userName", userName);
     }
+
 }
+
