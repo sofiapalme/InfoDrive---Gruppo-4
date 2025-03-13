@@ -1,7 +1,6 @@
 package org.example.web.web;
 
 import io.quarkus.qute.Template;
-import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import org.example.web.web.service.SessionManager;
@@ -21,8 +20,12 @@ public class LogoutResource {
     }
 
     @GET
-    public TemplateInstance renderLogout(@CookieParam("Sessione") String sessionId) {
-        return logout.instance();
+    public Response renderLogout(@CookieParam("Sessione") String sessionId) {
+        return Response.ok(logout.instance())
+                .header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+                .header("Pragma", "no-cache")
+                .header("Expires", "0")
+                .build();
     }
 
     @POST
@@ -33,7 +36,8 @@ public class LogoutResource {
             sessionManager.removeUserFromSession(sessionId);
         }
 
-        Response.ResponseBuilder responseBuilder = Response.seeOther(URI.create("/logout"));
+        Response.ResponseBuilder responseBuilder = Response.seeOther(URI.create("/"));
+
         for (Map.Entry<String, Cookie> entry : headers.getCookies().entrySet()) {
             String cookieName = entry.getKey();
             Cookie cookie = entry.getValue();
