@@ -82,13 +82,13 @@
 <main>
   <div class="container">
     <h2>Anagrafa Utente</h2>
-    <form>
-      <input type="text" placeholder="nome">
-      <input type="text" placeholder="cognome">
-      <input type="email" placeholder="email">
+    <form action="/user" method="post">
+      <input type="text" name="nome" placeholder="Nome" required>
+      <input type="text" name="cognome" placeholder="Cognome" required>
+      <input type="email" name="email" placeholder="Email" required>
       <div class="buttons-container">
-        <button type="submit" class="btn big">anagrafa</button>
-        <button type="reset" class="btn big">reset</button>
+        <button type="submit" class="btn big">Anagrafa</button>
+        <button type="reset" class="btn big">Reset</button>
       </div>
     </form>
   </div>

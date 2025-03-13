@@ -29,29 +29,38 @@ public class UserResource {
     }
 
     @POST
-    public void loadDataOnFile(
+    public Response loadDataOnFile(
             @FormParam("nome") String name,
             @FormParam("cognome") String surname,
             @FormParam("email") String email
-    )
-    {
+    ) {
+        if (name == null || name.trim().isEmpty() ||
+            surname == null || surname.trim().isEmpty() ||
+            email == null || email.trim().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Tutti i campi sono obbligatori.")
+                    .build();
+        }
+
         String path = Paths.get("files", "users.csv").toString();
         File file = new File(path);
         int lastId = 0;
 
-        // Leggere l'ultimo ID dal file
+        file.getParentFile().mkdirs();
+
         if (file.exists()) {
             try (var reader = new java.io.BufferedReader(new java.io.FileReader(file))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(";");
-                    if (parts.length > 0) {
+                    if (parts.length > 3) {
                         try {
-                            int id = Integer.parseInt(parts[0]);
+                            int id = Integer.parseInt(parts[3]);
                             if (id > lastId) {
                                 lastId = id;
                             }
-                        } catch (NumberFormatException ignored) {}
+                        } catch (NumberFormatException ignored) {
+                        }
                     }
                 }
             } catch (IOException e) {
@@ -61,18 +70,22 @@ public class UserResource {
 
         int newId = lastId + 1;
 
-        // Scrivere il nuovo utente nel file
         try (FileWriter w = new FileWriter(file, true);
              BufferedWriter bw = new BufferedWriter(w)) {
-            bw.write("\n" + name + ";" + surname + ";" + email + ";" + newId);
+            if (file.length() == 0) {
+                bw.write("Nome;Cognome;Email;ID\n");
+            }
+            bw.write(name + ";" + surname + ";" + email + ";" + newId + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return Response.seeOther(URI.create("/user?success=true")).build();
     }
+
     @GET
     @Path("/redirectToHome")
     public Response redirectToHome() {
-        // Questo reindirizzerà alla pagina di receptionProfile
         return Response.seeOther(URI.create("/receptionProfile")).build();
     }
 }
