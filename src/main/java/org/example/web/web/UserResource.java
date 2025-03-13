@@ -3,11 +3,13 @@ package org.example.web.web;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Paths;
 
 import static java.nio.file.Paths.get;
@@ -66,5 +68,11 @@ public class UserResource {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @GET
+    @Path("/redirectToHome")
+    public Response redirectToHome() {
+        // Questo reindirizzerà alla pagina di receptionProfile
+        return Response.seeOther(URI.create("/receptionProfile")).build();
     }
 }
