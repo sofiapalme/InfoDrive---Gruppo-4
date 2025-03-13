@@ -46,8 +46,6 @@ public class UserResource {
         File file = new File(path);
         int lastId = 0;
 
-        file.getParentFile().mkdirs();
-
         if (file.exists()) {
             try (var reader = new java.io.BufferedReader(new java.io.FileReader(file))) {
                 String line;
