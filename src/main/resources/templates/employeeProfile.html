@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Profilo</title>
-    <style>        body {
+    <style>
+        body {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -52,26 +53,28 @@
 
         .containerButton {
             display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
             gap: 15px;
-            width: 60%
+            width: 100%;
         }
 
-        .containerButton button[type="reset"], .containerButton button[type="submit"] {
+        .containerButton button {
             background-color: #F0F0F0;
             border: 1px solid black;
             padding: 10px 10px;
-            width: 40%;
+            width: 100%;
             border-radius: 15px;
             font-size: 16px;
             cursor: pointer;
         }
 
-        .containerButton button[type="submit"]:hover {
+        .containerButton button:hover {
             transform: scale(1.05);
         }
 
-        .containerButton button[type="submit"]:active {
+        .containerButton button:active {
             transform: scale(1);
         }
 
@@ -80,20 +83,26 @@
                 width: 90%;
             }
 
-            .containerButton button[type="reset"], .containerButton button[type="submit"] {
+            .containerButton button {
                 width: 100%;
                 margin: 5px 0;
             }
-        }    </style>
+        }
+    </style>
 </head>
-<body><h1>NomeAzienda</h1>
-<div class="container">
-    <div class="containerButton">
+<body>
+    <h1>NomeAzienda</h1>
+    <div class="container">
         <header><h2>Benvenuto {userName}</h2></header>
-        <button>Annulla visita</button>
-        <button>Aggiungi visita</button>
-        <button>Anagrafa nuovo cliente</button>
+        <div class="containerButton">
+            <button>Annulla visita</button>
+            <button>Aggiungi visita</button>
+            <button>Anagrafica nuovo cliente</button>
+
+            <form method="POST" action="/logout">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
     </div>
-</div>
 </body>
 </html>

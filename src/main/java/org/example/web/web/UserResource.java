@@ -4,6 +4,7 @@ import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.example.web.service.VisitManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,9 +19,11 @@ import static spark.Spark.port;
 @Path("/user")
 public class UserResource {
     private final Template user;
+    private VisitManager visitManager;
 
-    public UserResource(Template user) {
+    public UserResource(Template user, VisitManager visitManager) {
         this.user = user;
+        this.visitManager = visitManager;
     }
 
     @GET
@@ -42,41 +45,9 @@ public class UserResource {
                     .build();
         }
 
-        String path = Paths.get("files", "users.csv").toString();
-        File file = new File(path);
-        int lastId = 0;
+        int lastId = visitManager.getLastId();
 
-        if (file.exists()) {
-            try (var reader = new java.io.BufferedReader(new java.io.FileReader(file))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(";");
-                    if (parts.length > 3) {
-                        try {
-                            int id = Integer.parseInt(parts[3]);
-                            if (id > lastId) {
-                                lastId = id;
-                            }
-                        } catch (NumberFormatException ignored) {
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        int newId = lastId + 1;
-
-        try (FileWriter w = new FileWriter(file, true);
-             BufferedWriter bw = new BufferedWriter(w)) {
-            if (file.length() == 0) {
-                bw.write("Nome;Cognome;Email;ID\n");
-            }
-            bw.write(name + ";" + surname + ";" + email + ";" + newId + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        visitManager.addUserToFile(name,surname,email,lastId);
 
         return Response.seeOther(URI.create("/user?success=true")).build();
     }
