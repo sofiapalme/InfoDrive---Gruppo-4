@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReceptionTours</title>
+</head>
+<body>
+<h1>Lista delle visite</h1>
+  {#for tour in tourList}
+    <div>
+        <p>{tour.id}</p>
+        <p>{tour.startDateTime}</p>
+        <p>{tour.endDateTime}</p>
+        <p>{tour.employeeFk}</p>
+        <p>{tour.userFk}</p>
+    </div>
+  {/for}
+</body>
+</html>
