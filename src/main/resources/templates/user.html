@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
+      background-color: #382673;
       text-align: center;
       margin: 0;
       padding: 0;
@@ -66,34 +66,65 @@
     .big {
       width: 40%;
     }
+    .errorMsg{
+      margin-top: 5px;
+      color: red;
+      font-size: 20px;
+    }
+    .confirmMsg{
+      margin-top: 5px;
+      color: #382673;
+      font-size: 20px;
+    }
   </style>
 </head>
 <body>
-<header>
-  <span class="azienda">NomeAzienda</span>
-  <div class="buttons">
-    <form method="POST" action="/logout">
-    <button class="btn">logout</button>
-    </form>
-    <form action="/user/redirectToHome" method="get">
-      <button class="btn" type="submit">Home</button>
-    </form>
-  </div>
-</header>
+  <header>
+    <span class="azienda" style="color: white">NomeAzienda</span>
+    <div class="buttons">
+      <form method="POST" action="/logout">
+        <button class="btn">logout</button>
+      </form>
+      <form action="/user/redirectToHome" method="get">
+        <button class="btn" type="submit">Home</button>
+      </form>
+    </div>
+  </header>
 
-<main>
-  <div class="container">
-    <h2>Anagrafa Utente</h2>
-    <form action="/user" method="post">
-      <input type="text" name="nome" placeholder="Nome" required>
-      <input type="text" name="cognome" placeholder="Cognome" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <div class="buttons-container">
-        <button type="submit" class="btn big">Anagrafa</button>
-        <button type="reset" class="btn big">Reset</button>
-      </div>
-    </form>
-  </div>
-</main>
+  <main>
+    <div class="container">
+      <h2>Anagrafa Utente</h2>
+      <form id="anagrafaForm" action="/user" method="post">
+        <label for="nome">
+          <input type="text" name="nome" placeholder="Nome" id="nome" required>
+        </label>
+        <label for="cognome">
+          <input type="text" name="cognome" placeholder="Cognome" id="cognome" required>
+        </label>
+        <label for="email">
+          <input type="email" name="email" placeholder="Email" id="email" required>
+        </label>
+        <br>
+        {#if message != null}
+          <p class="errorMsg">{message}</p>
+        {/if}
+        {#if message_c != null}
+          <p class="confirmMsg">{message_c}</p>
+        {/if}
+        <div class="buttons-container">
+          <button type="submit" class="btn big">Anagrafa</button>
+          <button type="reset" class="btn big">Reset</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+  </script>
 </body>
 </html>
