@@ -1,7 +1,6 @@
 package org.example.web.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-
 import java.io.*;
 import java.nio.file.Paths;
 
@@ -9,7 +8,7 @@ import java.nio.file.Paths;
 public class VisitManager {
     private static final String USERS_FILE_PATH = Paths.get("files", "users.csv").toString();
 
-    public static int getLastId() {
+    public int getLastId() {
         int lastId = 0;
         File file = new File(USERS_FILE_PATH);
 
@@ -35,7 +34,7 @@ public class VisitManager {
         return lastId;
     }
 
-    public static boolean emailExists(String email) {
+    public boolean emailExists(String email) {
         File file = new File(USERS_FILE_PATH);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -51,7 +50,7 @@ public class VisitManager {
         return false;
     }
 
-    public static void addUserToFile(String name, String surname, String email, int lastId) {
+    public void addUserToFile(String name, String surname, String email, int lastId) {
         if (emailExists(email)) {
             return;
         }
@@ -97,4 +96,3 @@ public class VisitManager {
         }
     }
 }
-
