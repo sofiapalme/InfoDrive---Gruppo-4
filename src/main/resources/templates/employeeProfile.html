@@ -96,9 +96,17 @@
 <div class="container">
     <header><h2>Benvenuto {userName}</h2></header>
     <div class="containerButton">
+
         <button>Annulla visita</button>
-        <button>Aggiungi visita</button>
-        <button>Anagrafica nuovo cliente</button>
+
+        <form id="aggiungiVisita" action="/addVisit" method="GET">
+            <button type="submit">Aggiungi visita</button>
+        </form>
+
+
+        <form id="anagrafaForm" action="/user" method="GET">
+            <button type="submit">Anagrafa nuovo cliente</button>
+        </form>
 
         <form method="POST" action="/logout">
             <button type="submit">Logout</button>
