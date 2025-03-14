@@ -5,30 +5,35 @@ import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.example.web.service.VisitManager;
+import org.example.web.web.service.SessionManager;
+import org.jboss.logging.Logger;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Paths;
-
-import static java.nio.file.Paths.get;
-import static spark.Spark.port;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Path("/user")
 public class UserResource {
     private final Template user;
-    private VisitManager visitManager;
+    private final VisitManager visitManager;
+    private final SessionManager sessionManager;
 
-    public UserResource(Template user, VisitManager visitManager) {
+    public UserResource(Template user, VisitManager visitManager, SessionManager sessionManager) {
         this.user = user;
         this.visitManager = visitManager;
+        this.sessionManager = sessionManager;
     }
 
     @GET
-    public TemplateInstance renderUser(){
-        return user.instance();
+    public TemplateInstance renderUser(
+            @CookieParam("Sessione")String idSession,
+            @QueryParam("message") String message,
+            @QueryParam("message_c") String message_c) {
+
+        sessionManager.checkUserSession(idSession);
+
+        return user.data("message", message,
+                "message_c", message_c);
     }
 
     @POST
@@ -37,20 +42,33 @@ public class UserResource {
             @FormParam("cognome") String surname,
             @FormParam("email") String email
     ) {
+        String messaggioErrore = null;
+        String messaggioConferma = null;
+
         if (name == null || name.trim().isEmpty() ||
-            surname == null || surname.trim().isEmpty() ||
-            email == null || email.trim().isEmpty()) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Tutti i campi sono obbligatori.")
-                    .build();
+                surname == null || surname.trim().isEmpty() ||
+                email == null || email.trim().isEmpty()) {
+            messaggioErrore = "Tutti i campi sono obbligatori.";
+            String encodedMessage = URLEncoder.encode(messaggioErrore, StandardCharsets.UTF_8);
+            return Response.seeOther(URI.create("/user?message=" + encodedMessage)).build();
         }
 
-        int lastId = visitManager.getLastId();
+        boolean emailExists = visitManager.emailExists(email);
 
-        visitManager.addUserToFile(name,surname,email,lastId);
-
-        return Response.seeOther(URI.create("/user?success=true")).build();
+        if (emailExists) {
+            messaggioErrore = "L'user è già stato anagrafato";
+            String encodedMessage = URLEncoder.encode(messaggioErrore, StandardCharsets.UTF_8);
+            return Response.seeOther(URI.create("/user?message=" + encodedMessage)).build();
+        }
+        else {
+            messaggioConferma = "L'user è stato anagrafato";
+            String encodedMessage = URLEncoder.encode(messaggioConferma, StandardCharsets.UTF_8);
+            int lastId = visitManager.getLastId();
+            visitManager.addUserToFile(name, surname, email, lastId);
+            return Response.seeOther(URI.create("/user?message_c=" + encodedMessage)).build();
+        }
     }
+
 
     @GET
     @Path("/redirectToHome")
