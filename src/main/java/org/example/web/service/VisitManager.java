@@ -69,9 +69,8 @@ public class VisitManager {
         }
     }
 
-    public void checkUserExistence(String name, String surname, String email) {
+    public int checkUserExistence(String name, String surname, String email) {
         File usersFile = new File(USERS_FILE_PATH);
-        boolean userExists = false;
 
         try (BufferedReader br = new BufferedReader(new FileReader(usersFile))) {
             String line;
@@ -83,16 +82,17 @@ public class VisitManager {
                     String em = dati[2].trim();
 
                     if (n.equals(name) && s.equals(surname) && em.equals(email)) {
-                        userExists = true;
+                        return Integer.parseInt(dati[3].trim());
                     }
                 }
             }
 
-            if (!userExists) {
-                addUserToFile(name, surname, email, getLastId());
-            }
+            addUserToFile(name, surname, email, getLastId());
+            return getLastId();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return 0;
     }
 }
