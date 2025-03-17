@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Visit</title>
+    <title>Add Tour</title>
     <style>
         body {
             display: flex;
@@ -58,7 +58,7 @@
             width: 60%
         }
 
-        .containerButton button[type="reset"], .containerButton button[type="submit"] {
+        .containerButton button[type="submit"] {
             background-color: #F0F0F0;
             border: 1px solid black;
             padding: 10px 10px;
@@ -68,11 +68,29 @@
             cursor: pointer;
         }
 
-        .containerButton button[type="submit"]:hover {
+        .containerButton button[type="reset"] {
+            background-color: #F0F0F0;
+            border: 1px solid black;
+            padding: 10px 10px;
+            width: 40%;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .containerButton button[type="submit"] {
             transform: scale(1.05);
         }
 
-        .containerButton button[type="submit"]:active {
+        .containerButton button[type="reset"]:hover {
+            transform: scale(1.05);
+        }
+
+        .containerButton button[type="submit"] {
+            transform: scale(1);
+        }
+
+        .containerButton button[type="reset"]:active {
             transform: scale(1);
         }
 
@@ -81,16 +99,23 @@
                 width: 90%;
             }
 
-            .containerButton button[type="reset"], .containerButton button[type="submit"] {
+            .containerButton button[type="submit"] {
                 width: 100%;
                 margin: 5px 0;
             }
-        }    </style>
+
+            .containerButton button[type="reset"] {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+
 </head>
 <body>
 <h1>NomeAzienda</h1>
 <div class="container">
-    <form action="/addVisit" method="post">
+    <form action="/addTour" method="post">
         <header>
             <h2>Aggiungi visita</h2>
         </header>
@@ -100,14 +125,17 @@
         <br>
         <label for="email">Email<input type="text" name="email" id="email" required="required"></label>
         <br>
-        <label for="datetimeinizio">Seleziona data e ora inizio visita:</label>
-        <input type="datetime-local" id="datetimeinizio" name="datetimeinizio">
+        <label for="startDateTime">Seleziona data e ora inizio visita:</label>
+        <input type="datetime-local" id="startDateTime" name="startDateTime" required="required">
         <br>
-        <label for="datetimefine">Seleziona data e ora fine visita:</label>
-        <input type="datetime-local" id="datetimefine" name="datetimefine">
+        <label for="endDateTime">Seleziona data e ora fine visita:</label>
+        <input type="datetime-local" id="endDateTime" name="endDateTime" required="required">
         <br>
-        <label for="duration">Durata (in ore):</label>
-        <input type="time" id="duration" name="duration" min="01:00" max="08:00" step="3600" placeholder="Ore">
+        <label for="estimatedDuration">Durata stimata (ore):</label>
+        <select id="estimatedDuration" name="estimatedDuration">
+            <option value="1">1 ora</option>
+            <option value="2">2 ore</option>
+        </select>
         <div class="containerButton">
             <button type="submit">Aggiungi</button>
             <button type="reset">Cancella</button>
