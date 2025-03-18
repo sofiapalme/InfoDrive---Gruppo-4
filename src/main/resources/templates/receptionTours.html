@@ -3,82 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>ReceptionTours</title>
-</head>
-<style>
+</head><style>
+    h1 {
+        position: absolute;
+        top: 0;
+        left: 5%;
+        color: white;
+    }
+    h2 {
+        color: white;
+    }
+
     body{
+        padding-top: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
         background-color: #382673;
     }
-    h1{
-        font-size: 50px;
-    }
-    .tour-wrapper{
+    .tour-wrapper {
+        display: flex;
+        width: fit-content;
         height: 40rem;
-        background-color: red;
-        overflow-y: scroll;
+        overflow-y: auto;
+        color: white;
+        padding: 10px;
+        background-color: #333;
     }
-    .tour-container{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: white;
-        cursor: default;
-        font-size: 30px;
-        border: 2px solid black;
-        border-radius: 20px;
-        margin-bottom: 1rem;
+
+    .tour-wrapper table {
+        width: fit-content;
+        border-collapse: separate;
+        border-spacing: 5px;
     }
-    .container-header{
-        height: 2.5rem;
-        background-color: lightcoral;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 75px;
-        border-bottom: 1px solid black;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        padding: 0.75rem;
+
+    .tour-wrapper th, .tour-wrapper td {
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+        color: white;
     }
-    .container-data{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
+
+    .tour-wrapper th {
+        background-color: #555;
+        font-weight: bold;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .tour-wrapper img {
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
     }
 </style>
 <body>
-<h1>Lista delle visite</h1>
+<h1>NomeAzienda</h1>
+<h2>Lista delle visite</h2>
 <div class="tour-wrapper">
-    {#for tour in tourList}
-        <div class = "tour-container">
-            <div class="container-header">
-                <p>id</p>
-                <p>inizio</p>
-                <p>fine</p>
-                <p>durata</p>
-                <p>stato</p>
-                <p>dipendente</p>
-                <p>cliente</p>
-            </div>
-            <div class="container-data">
-                <p>{tour.id}</p>
-                <p class="startDT">{tour.startDateTime}</p>
-                <p class="endDT">{tour.endDateTime}</p>
-                <p>{tour.duration}</p>
-                <p>{tour.status}</p>
-                <p>{tour.employeeFk}</p>
-                <p>{tour.userFk}</p>
-            </div>
-        </div>
-    {/for}
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>inizio</th>
+            <th>fine</th>
+            <th>dipendente</th>
+            <th>cliente</th>
+            <th>azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        {#for tour in tourList}
+            <tr>
+                <td class="tourID">{tour.id}</td>
+                <td class="startDT">{tour.startDateTime}</td>
+                <td class="endDT">{tour.endDateTime}</td>
+                <td class="employeeFK">{tour.employeeFk}</td>
+                <td class="userFK">{tour.userFk}</td>
+                <td>
+                    <form action="/action_page" method="POST">
+                        <img src="/bin.png" alt="Elimina una visita" style="width:25px; height:25px;">
+                    </form>
+                </td>
+            </tr>
+        {/for}
+        </tbody>
+    </table>
 </div>
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-            const startDts = document.querySelectorAll(".startDT");
+        const startDts = document.querySelectorAll(".startDT");
         const endDts = document.querySelectorAll(".endDT");
 
         startDts.forEach(startDt => {
