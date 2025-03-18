@@ -58,40 +58,44 @@
     <input type="date" name="date" required="required">
     <button type="submit"> submit </button>
 </form>
-<div class="tour-wrapper">
-    <table>
-        <thead>
-        <tr>
-            <th>id</th>
-            <th>inizio</th>
-            <th>fine</th>
-            <th>durata</th>
-            <th>status</th>
-            <th>badge</th>
-            <th>dipendente</th>
-            <th>cliente</th>
-            <th>azioni</th>
-        </tr>
-        </thead>
-        <tbody>
-        {#for tour in tourList}
+{#if !message}
+    <div class="tour-wrapper">
+        <table>
+            <thead>
             <tr>
-                <td class="tourID">{tour.id}</td>
-                <td class="startDT">{tour.startDateTime}</td>
-                <td class="endDT">{tour.endDateTime}</td>
-                <td class="duration">{tour.duration}</td>
-                <td class="status">{tour.status}</td>
-                <td class="badge">{tour.badgeCode}</td>
-                <td class="employeeFK">{tour.employeeFk}</td>
-                <td class="userFK">{tour.userFk}</td>
-                <td>
-                    <img src="/bin.png" alt="Elimina una visita" style="width:25px; height:25px;">
-                </td>
+                <th>id</th>
+                <th>inizio</th>
+                <th>fine</th>
+                <th>durata</th>
+                <th>status</th>
+                <th>badge</th>
+                <th>dipendente</th>
+                <th>cliente</th>
+                <th>azioni</th>
             </tr>
-        {/for}
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            {#for tour in tourList}
+                <tr>
+                    <td class="tourID">{tour.id}</td>
+                    <td class="startDT">{tour.startDateTime}</td>
+                    <td class="endDT">{tour.endDateTime}</td>
+                    <td class="duration">{tour.duration}</td>
+                    <td class="status">{tour.status}</td>
+                    <td class="badge">{tour.badgeCode}</td>
+                    <td class="employeeFK">{tour.employeeFk}</td>
+                    <td class="userFK">{tour.userFk}</td>
+                    <td>
+                        <img src="/bin.png" alt="Elimina una visita" style="width:25px; height:25px;">
+                    </td>
+                </tr>
+            {/for}
+            </tbody>
+        </table>
+    </div>
+{#else}
+    <h2> {message} </h2>
+{/if}
 <script>
     window.addEventListener("DOMContentLoaded", () => {
         const startDts = document.querySelectorAll(".startDT");

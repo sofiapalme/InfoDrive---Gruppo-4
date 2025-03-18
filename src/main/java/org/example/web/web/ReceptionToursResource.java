@@ -12,8 +12,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +30,56 @@ public class ReceptionToursResource {
 
     @GET
     public TemplateInstance renderReceptionTours() {
+        List<Tour> tourList = getToursFromFile();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(),formatter)));
+        return receptionTours.data("message",null).data("tourList",tourList);
+    }
+
+    @POST
+    public TemplateInstance getFilteredTours(@FormParam("date") String date)
+    {
+        List<Tour> tourList = getToursFromFile();
+        List<Tour> filteredTours = new ArrayList<>();
+        tourList.forEach(tour -> {
+            if(tour.getStartDateTime().split("T")[0].equals(date))
+            {
+                filteredTours.add(tour);
+            }
+        });
+        if(filteredTours.size() > 0)
+        {
+            return receptionTours.data("message",null).data("tourList",filteredTours);
+        }
+        return receptionTours.data("message","Nessuna visita trovata per questa data").data("tourList",null);
+    }
+
+    private String getNameAndSurname(String email, String file)
+    {
+        String path = Paths.get("files",file).toString();
+        File f = new File(path);
+        try(BufferedReader br = new BufferedReader(new FileReader(f)))
+        {
+            String line;
+            br.readLine();
+            while((line = br.readLine()) != null)
+            {
+                String[] splittedLine = line.split(";");
+                if(splittedLine[2].equals(email))
+                {
+                    return splittedLine[0] + " " + splittedLine[1];
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<Tour> getToursFromFile()
+    {
         List<Tour> tourList = new ArrayList<>();
         String path = Paths.get("files","tours.csv").toString();
         File f = new File(path);
@@ -54,67 +107,6 @@ public class ReceptionToursResource {
         catch (Exception e) {
             e.printStackTrace();
         }
-
-        return receptionTours.data("tourList",tourList);
-    }
-
-    @POST
-    public TemplateInstance getFilteredTours(@FormParam("date") String date)
-    {
-        List<Tour> tourList = new ArrayList<>();
-        String path = Paths.get("files","tours.csv").toString();
-        File f = new File(path);
-
-        try(BufferedReader br = new BufferedReader(new FileReader(f))) {
-            String line;
-            String[] splittedLine;
-            br.readLine();
-            while ((line = br.readLine()) != null)
-            {
-                splittedLine = line.split(";");
-                Tour tour = new Tour(
-                        Integer.parseInt(splittedLine[0]),
-                        splittedLine[1],
-                        splittedLine[2],
-                        Integer.parseInt(splittedLine[3]),
-                        splittedLine[4],
-                        Integer.parseInt(splittedLine[5]),
-                        getNameAndSurname(splittedLine[6],"dipendente.csv"),
-                        getNameAndSurname(splittedLine[7],"users.csv")
-                );
-                if(tour.getStartDateTime().split("T")[0].equals(date.toString()))
-                {
-                    tourList.add(tour);
-                }
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return receptionTours.data("tourList",tourList);
-    }
-
-    private String getNameAndSurname(String email, String file)
-    {
-        String path = Paths.get("files",file).toString();
-        File f = new File(path);
-        try(BufferedReader br = new BufferedReader(new FileReader(f)))
-        {
-            String line;
-            br.readLine();
-            while((line = br.readLine()) != null)
-            {
-                String[] splittedLine = line.split(";");
-                if(splittedLine[2].equals(email))
-                {
-                    return splittedLine[0] + " " + splittedLine[1];
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+        return tourList;
     }
 }
