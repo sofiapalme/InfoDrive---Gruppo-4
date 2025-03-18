@@ -21,18 +21,11 @@
         align-items: center;
         background-color: #382673;
     }
-    .tour-wrapper {
-        display: flex;
-        width: fit-content;
-        height: 40rem;
-        overflow-y: auto;
-        color: white;
-        padding: 10px;
-        background-color: #333;
-    }
 
     .tour-wrapper table {
+        background-color: black;
         width: fit-content;
+        height: fit-content;
         border-collapse: separate;
         border-spacing: 5px;
     }
@@ -61,6 +54,10 @@
 <body>
 <h1>NomeAzienda</h1>
 <h2>Lista delle visite</h2>
+<form action="/receptionTours" method="post">
+    <input type="date" name="date" required="required">
+    <button type="submit"> submit </button>
+</form>
 <div class="tour-wrapper">
     <table>
         <thead>
@@ -88,9 +85,7 @@
                 <td class="employeeFK">{tour.employeeFk}</td>
                 <td class="userFK">{tour.userFk}</td>
                 <td>
-                    <form action="/action_page" method="POST">
-                        <img src="/bin.png" alt="Elimina una visita" style="width:25px; height:25px;">
-                    </form>
+                    <img src="/bin.png" alt="Elimina una visita" style="width:25px; height:25px;">
                 </td>
             </tr>
         {/for}
