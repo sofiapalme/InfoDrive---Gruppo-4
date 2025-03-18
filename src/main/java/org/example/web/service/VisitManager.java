@@ -69,7 +69,7 @@ public class VisitManager {
         }
     }
 
-    public int checkUserExistence(String name, String surname, String email) {
+    public String checkUserExistence(String name, String surname, String email) {
         File usersFile = new File(USERS_FILE_PATH);
 
         try (BufferedReader br = new BufferedReader(new FileReader(usersFile))) {
@@ -82,17 +82,17 @@ public class VisitManager {
                     String em = dati[2].trim();
 
                     if (n.equals(name) && s.equals(surname) && em.equals(email)) {
-                        return Integer.parseInt(dati[3].trim());
+                        return dati[2].trim();
                     }
                 }
             }
 
             addUserToFile(name, surname, email, getLastId());
-            return getLastId();
+            return email;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return 0;
+        return null;
     }
 }
