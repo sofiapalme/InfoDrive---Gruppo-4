@@ -62,5 +62,11 @@ public class ReceptionProfileResource {
         return Response.seeOther(URI.create("/user")).build();
     }
 
+    @GET
+    @Path("/redirectToTour")
+    public Response redirectToTour() {
+        return Response.seeOther(URI.create("/receptionTours")).build();
+    }
+
 }
 
