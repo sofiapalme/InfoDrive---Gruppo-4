@@ -38,34 +38,20 @@ public class AddTourResource {
             @FormParam("email") String email,
             @FormParam("startDateTime")String startDateTimeString,
             @FormParam("endDateTime") String endDateTimeString,
-            @FormParam("estimatedDuration")String durationString
+            @FormParam("estimatedDuration")String durationString,
+            @FormParam("employeeEmail") String employeeEmail
     ) {
-        System.out.println(name);
-        System.out.println(surname);
-        System.out.println(email);
-
         String userMail = visitManager.checkUserExistence(name, surname, email);
-
-        System.out.println("user email:" + userMail);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, formatter);
         LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, formatter);
 
-        System.out.println("Inizio: " + startDateTime);
-        System.out.println("Fine: " + endDateTime);
-
         int duration = Integer.parseInt(durationString);
-
-        System.out.println("Durata in ore: " + duration);
 
         int lastId = tourManager.getLastTourId();
 
-        System.out.println("Ultimo id visita: " + lastId);
-
-        String employeeMail = "PROVA";
-
-        tourManager.addTourToFile(startDateTime,endDateTime, duration,  55555, employeeMail, userMail);
+        tourManager.addTourToFile(startDateTime,endDateTime, duration,  55555, employeeEmail, userMail);
 
         return Response.seeOther(URI.create("/addTour")).build();
     }
