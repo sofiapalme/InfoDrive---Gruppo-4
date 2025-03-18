@@ -4,23 +4,18 @@ import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.core.Response;
 import org.example.web.Tour;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Path("/receptionTours")
 public class ReceptionToursResource {
     private final Template receptionTours;
-    private static final Logger log = LoggerFactory.getLogger(ReceptionProfileResource.class);
 
     public ReceptionToursResource(Template receptionTours) {
         this.receptionTours = receptionTours;
@@ -39,7 +34,6 @@ public class ReceptionToursResource {
             while ((line = br.readLine()) != null)
             {
                 splittedLine = line.split(";");
-                log.info(Arrays.toString(splittedLine));
                 Tour tour = new Tour(
                         Integer.parseInt(splittedLine[0]),
                         splittedLine[1],
