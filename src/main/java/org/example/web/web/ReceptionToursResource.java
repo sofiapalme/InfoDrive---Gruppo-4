@@ -6,7 +6,6 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import org.example.web.Tour;
-import org.example.web.service.TourManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +46,9 @@ public class ReceptionToursResource {
                         splittedLine[2],
                         Integer.parseInt(splittedLine[3]),
                         splittedLine[4],
+                        Integer.parseInt(splittedLine[5]),
                         0,
-                        Integer.parseInt(splittedLine[6])
+                        0
                 );
                 tourList.add(tour);
             }

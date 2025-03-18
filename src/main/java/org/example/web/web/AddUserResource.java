@@ -6,20 +6,19 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.example.web.service.VisitManager;
 import org.example.web.web.service.SessionManager;
-import org.jboss.logging.Logger;
 
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-@Path("/user")
-public class UserResource {
-    private final Template user;
+@Path("/addUser")
+public class AddUserResource {
+    private final Template addUser;
     private final VisitManager visitManager;
     private final SessionManager sessionManager;
 
-    public UserResource(Template user, VisitManager visitManager, SessionManager sessionManager) {
-        this.user = user;
+    public AddUserResource(Template addUser, VisitManager visitManager, SessionManager sessionManager) {
+        this.addUser = addUser;
         this.visitManager = visitManager;
         this.sessionManager = sessionManager;
     }
@@ -32,7 +31,7 @@ public class UserResource {
 
         sessionManager.checkUserSession(idSession);
 
-        return user.data("message", message,
+        return addUser.data("message", message,
                 "message_c", message_c);
     }
 
@@ -50,7 +49,7 @@ public class UserResource {
                 email == null || email.trim().isEmpty()) {
             messaggioErrore = "Tutti i campi sono obbligatori.";
             String encodedMessage = URLEncoder.encode(messaggioErrore, StandardCharsets.UTF_8);
-            return Response.seeOther(URI.create("/user?message=" + encodedMessage)).build();
+            return Response.seeOther(URI.create("/addUser?message=" + encodedMessage)).build();
         }
 
         boolean emailExists = visitManager.emailExists(email);
@@ -58,14 +57,14 @@ public class UserResource {
         if (emailExists) {
             messaggioErrore = "L'user è già stato anagrafato";
             String encodedMessage = URLEncoder.encode(messaggioErrore, StandardCharsets.UTF_8);
-            return Response.seeOther(URI.create("/user?message=" + encodedMessage)).build();
+            return Response.seeOther(URI.create("/addUser?message=" + encodedMessage)).build();
         }
         else {
             messaggioConferma = "L'user è stato anagrafato";
             String encodedMessage = URLEncoder.encode(messaggioConferma, StandardCharsets.UTF_8);
             int lastId = visitManager.getLastId();
             visitManager.addUserToFile(name, surname, email, lastId);
-            return Response.seeOther(URI.create("/user?message_c=" + encodedMessage)).build();
+            return Response.seeOther(URI.create("/addUser?message_c=" + encodedMessage)).build();
         }
     }
 

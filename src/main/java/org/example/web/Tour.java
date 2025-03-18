@@ -7,16 +7,17 @@ import java.util.Date;
 
 @TemplateData
 public class Tour {
-    Integer id;
+    int id;
     String startDateTime;
     String endDateTime;
     int duration;
     String status;
+    int badgeCode;
     int employeeFk;
     int userFk;
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -28,9 +29,17 @@ public class Tour {
         return endDateTime;
     }
 
-    public int getDuration() { return duration; }
+    public int getDuration() {
+        return duration;
+    }
 
-    public String getStatus() { return status; }
+    public String getStatus() {
+        return status;
+    }
+
+    public int getBadgeCode() {
+        return badgeCode;
+    }
 
     public int getEmployeeFk() {
         return employeeFk;
@@ -40,12 +49,13 @@ public class Tour {
         return userFk;
     }
 
-    public Tour(int id, String startDateTime, String endDateTime, int duration, String status, int employeeFk, int userFk) {
+    public Tour(int id, String startDateTime, String endDateTime, int duration, String status, int badgeCode, int employeeFk, int userFk) {
         this.id = id;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.duration = duration;
         this.status = status;
+        this.badgeCode = badgeCode;
         this.employeeFk = employeeFk;
         this.userFk = userFk;
     }
