@@ -18,7 +18,6 @@ import java.net.URI;
 
 @Path("/")
 public class LoginResource {
-
     private static final Logger log = LoggerFactory.getLogger(LoginResource.class);
     private final Template login;
     private final UserManager utentiManager;
@@ -32,7 +31,6 @@ public class LoginResource {
 
     @GET
     public TemplateInstance mostraPaginaLogin() {
-        System.out.println("1");
         return login.data("message", null);
     }
 
@@ -51,7 +49,6 @@ public class LoginResource {
         }
 
         NewCookie sessionCookie = sessionManager.createUserSession(email); // Crea la sessione
-        log.info("valore cookie " + sessionCookie);
 
         if(result.equals("portineria")) {
             return Response
