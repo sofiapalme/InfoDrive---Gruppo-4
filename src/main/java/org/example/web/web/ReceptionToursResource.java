@@ -44,6 +44,9 @@ public class ReceptionToursResource {
                         Integer.parseInt(splittedLine[0]),
                         splittedLine[1],
                         splittedLine[2],
+                        Integer.parseInt(splittedLine[3]),
+                        splittedLine[4],
+                        Integer.parseInt(splittedLine[5]),
                         0,
                         0
                 );

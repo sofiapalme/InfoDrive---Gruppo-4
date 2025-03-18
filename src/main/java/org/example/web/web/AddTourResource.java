@@ -65,7 +65,7 @@ public class AddTourResource {
 
         int employeeFk = 0;
 
-        tourManager.addTourToFile(startDateTime,endDateTime, employeeFk, userId);
+        tourManager.addTourToFile(startDateTime,endDateTime, 1,  55555, employeeFk, userId);
 
         return Response.seeOther(URI.create("/addTour")).build();
     }
