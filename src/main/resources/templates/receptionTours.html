@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title>ReceptionTours</title>
 </head><style>
+    body{
+        padding-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #382673;
+    }
+
     h1 {
         position: absolute;
         top: 0;
@@ -14,12 +22,32 @@
         color: white;
     }
 
-    body{
-        padding-top: 40px;
+
+    .filter-wrapper{
+        margin-bottom: 1rem;
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        background-color: #382673;
+        gap: 3px;
+    }
+
+    .filter-wrapper input{
+        width: 7rem;
+        height: 3rem;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+    .filter-wrapper button{
+        width: 6rem;
+        height: 3.25rem;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+
+    .filter-wrapper button:hover{
+        scale: 1.1;
+        cursor: pointer;
     }
 
     .tour-wrapper table {
@@ -53,11 +81,17 @@
 </style>
 <body>
 <h1>NomeAzienda</h1>
-<h2>Lista delle visite</h2>
-<form action="/receptionTours" method="post">
-    <input type="date" name="date" required="required">
-    <button type="submit"> submit </button>
-</form>
+<h2 style="font-size: 50px">Lista delle visite</h2>
+<div class="filter-wrapper">
+    <form action="/receptionTours/getFilteredTours" method="post">
+        <input type="date" name="date" required="required">
+        <button type="submit"> Filtra </button>
+    </form>
+    <form action="/receptionTours/showAll" method="post">
+        <button type="submit"> Mostra tutti </button>
+    </form>
+</div>
+
 {#if !message}
     <div class="tour-wrapper">
         <table>
@@ -86,7 +120,11 @@
                     <td class="employeeFK">{tour.employeeFk}</td>
                     <td class="userFK">{tour.userFk}</td>
                     <td>
-                        <img src="/bin.png" alt="Elimina una visita" style="width:25px; height:25px;">
+                        <form action="/receptionTours/removeTour?tourId={tour.id}" method="post">
+                            <button style="border: none; background-color: transparent">
+                                <img src="/bin.png" alt="Elimina una visita" style="width:25px; height:25px;">
+                            </button>
+                        </form>
                     </td>
                 </tr>
             {/for}

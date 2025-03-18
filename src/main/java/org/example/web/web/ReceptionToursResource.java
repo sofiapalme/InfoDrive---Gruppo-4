@@ -2,15 +2,11 @@ package org.example.web.web;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
 import org.example.web.Tour;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,23 +19,24 @@ import java.util.List;
 @Path("/receptionTours")
 public class ReceptionToursResource {
     private final Template receptionTours;
+    private List<Tour> tourList;
 
     public ReceptionToursResource(Template receptionTours) {
         this.receptionTours = receptionTours;
+        this.tourList = getToursFromFile();
     }
 
     @GET
     public TemplateInstance renderReceptionTours() {
-        List<Tour> tourList = getToursFromFile();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(),formatter)));
         return receptionTours.data("message",null).data("tourList",tourList);
     }
 
     @POST
+    @Path("/getFilteredTours")
     public TemplateInstance getFilteredTours(@FormParam("date") String date)
     {
-        List<Tour> tourList = getToursFromFile();
         List<Tour> filteredTours = new ArrayList<>();
         tourList.forEach(tour -> {
             if(tour.getStartDateTime().split("T")[0].equals(date))
@@ -52,6 +49,26 @@ public class ReceptionToursResource {
             return receptionTours.data("message",null).data("tourList",filteredTours);
         }
         return receptionTours.data("message","Nessuna visita trovata per questa data").data("tourList",null);
+    }
+
+    @POST
+    @Path("/removeTour")
+    public TemplateInstance removeTour(@QueryParam("tourId") int tourId) throws IOException {
+
+        removeTourById(tourId);
+        tourList = getToursFromFile();
+        if(!tourList.isEmpty())
+        {
+            return receptionTours.data("message",null).data("tourList",tourList);
+        }
+        return receptionTours.data("message","Nessuna visita presente, prenotane di nuove").data("tourList",tourList);
+    }
+
+    @POST
+    @Path("/showAll")
+    public TemplateInstance showAllTours()
+    {
+        return receptionTours.data("message",null).data("tourList",tourList);
     }
 
     private String getNameAndSurname(String email, String file)
@@ -109,4 +126,30 @@ public class ReceptionToursResource {
         }
         return tourList;
     }
+
+    private void removeTourById(int tourId) throws IOException {
+        String path = Paths.get("files", "tours.csv").toString();
+        List<String> linesToKeep = new ArrayList<>();
+        String header = "id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail";
+        linesToKeep.add(header);
+        //LEGGE IL FILE E SI TIENE LE RIGHE DA NON ELIMINARE
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (!(line.split(";")[0].equals(tourId + ""))) {
+                    linesToKeep.add(line);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for(String line : linesToKeep)
+            {
+                bw.write(line + "\n");
+            }
+        }
+    }
 }
+
