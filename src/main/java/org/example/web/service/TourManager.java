@@ -38,19 +38,23 @@ public class TourManager {
         return lastId;
     }
 
-    public void addTourToFile(LocalDateTime startDateTime, LocalDateTime endDateTime, int employeeFk, int userFk) {
+    public void addTourToFile(LocalDateTime startDateTime, LocalDateTime endDateTime, int estimatedDuration, int employeeFk, int userFk) {
         int newId = getLastTourId() + 1;
+        String status = "In attesa";
         File file = new File(TOURS_FILE_PATH);
+
         try (FileWriter w = new FileWriter(file, true);
              BufferedWriter bw = new BufferedWriter(w)) {
 
             if (file.length() == 0) {
-                bw.write("Id;startDateTime;endDateTime;EmployeeFk;UserFk\n");
+                bw.write("Id;StartDateTime;EndDateTime;Duration;Status;EmployeeFk;UserFk\n");
             }
-            bw.write(newId + ";" + startDateTime + ";" + endDateTime + ";" + employeeFk + ";" + userFk + "\n");
+            bw.write(newId + ";" + startDateTime + ";" + endDateTime + ";" + estimatedDuration + ";" + status + ";" + employeeFk + ";" + userFk + "\n");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
+
+
