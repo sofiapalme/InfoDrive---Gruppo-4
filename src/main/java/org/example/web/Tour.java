@@ -10,6 +10,8 @@ public class Tour {
     Integer id;
     String startDateTime;
     String endDateTime;
+    int duration;
+    String status;
     int employeeFk;
     int userFk;
 
@@ -26,6 +28,10 @@ public class Tour {
         return endDateTime;
     }
 
+    public int getDuration() { return duration; }
+
+    public String getStatus() { return status; }
+
     public int getEmployeeFk() {
         return employeeFk;
     }
@@ -34,10 +40,12 @@ public class Tour {
         return userFk;
     }
 
-    public Tour(int id, String startDateTime, String endDateTime, int employeeFk, int userFk) {
+    public Tour(int id, String startDateTime, String endDateTime, int duration, String status, int employeeFk, int userFk) {
         this.id = id;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+        this.duration = duration;
+        this.status = status;
         this.employeeFk = employeeFk;
         this.userFk = userFk;
     }
