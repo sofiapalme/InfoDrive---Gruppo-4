@@ -4,8 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Map;
@@ -16,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionManager {
 
     public static final String NOME_COOKIE_SESSION = "Sessione";
-    private static final Logger log = LoggerFactory.getLogger(SessionManager.class);
 
     private final Map<String, String> sessions = new ConcurrentHashMap<>();
 
@@ -50,7 +47,6 @@ public class SessionManager {
     public void removeUserFromSession(String sessionId) {
         if (sessionId != null) {
             sessions.remove(sessionId);
-            log.info("Sessione rimossa per l'ID sessione: {}", sessionId);
         }
     }
 }

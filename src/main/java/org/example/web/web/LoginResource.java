@@ -10,15 +10,13 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
 
 @Path("/")
 public class LoginResource {
-    private static final Logger log = LoggerFactory.getLogger(LoginResource.class);
+
     private final Template login;
     private final UserManager utentiManager;
     private final SessionManager sessionManager;
@@ -31,6 +29,7 @@ public class LoginResource {
 
     @GET
     public TemplateInstance mostraPaginaLogin() {
+        System.out.println("1");
         return login.data("message", null);
     }
 
@@ -48,7 +47,7 @@ public class LoginResource {
                     .build();
         }
 
-        NewCookie sessionCookie = sessionManager.createUserSession(email); // Crea la sessione
+        NewCookie sessionCookie = sessionManager.createUserSession(email);
 
         if(result.equals("portineria")) {
             return Response
