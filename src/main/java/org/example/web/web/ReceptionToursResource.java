@@ -47,8 +47,8 @@ public class ReceptionToursResource {
                         Integer.parseInt(splittedLine[3]),
                         splittedLine[4],
                         Integer.parseInt(splittedLine[5]),
-                        0,
-                        0
+                        getNameAndSurname(splittedLine[6],"dipendente.csv"),
+                        getNameAndSurname(splittedLine[7],"users.csv")
                 );
                 tourList.add(tour);
             }
@@ -59,4 +59,29 @@ public class ReceptionToursResource {
 
         return receptionTours.data("tourList",tourList);
     }
+
+    private String getNameAndSurname(String email, String file)
+    {
+        String path = Paths.get("files",file).toString();
+        File f = new File(path);
+        try(BufferedReader br = new BufferedReader(new FileReader(f)))
+        {
+            String line;
+            br.readLine();
+            while((line = br.readLine()) != null)
+            {
+                String[] splittedLine = line.split(";");
+                if(splittedLine[2].equals(email))
+                {
+                    return splittedLine[0] + " " + splittedLine[1];
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

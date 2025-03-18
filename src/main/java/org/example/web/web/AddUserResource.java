@@ -55,12 +55,12 @@ public class AddUserResource {
         boolean emailExists = visitManager.emailExists(email);
 
         if (emailExists) {
-            messaggioErrore = "L'user è già stato anagrafato";
+            messaggioErrore = "L'utente è già stato anagrafato";
             String encodedMessage = URLEncoder.encode(messaggioErrore, StandardCharsets.UTF_8);
             return Response.seeOther(URI.create("/addUser?message=" + encodedMessage)).build();
         }
         else {
-            messaggioConferma = "L'user è stato anagrafato";
+            messaggioConferma = "L'utente è stato anagrafato";
             String encodedMessage = URLEncoder.encode(messaggioConferma, StandardCharsets.UTF_8);
             int lastId = visitManager.getLastId();
             visitManager.addUserToFile(name, surname, email, lastId);

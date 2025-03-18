@@ -13,8 +13,8 @@ public class Tour {
     int duration;
     String status;
     int badgeCode;
-    int employeeFk;
-    int userFk;
+    String employeeMail;
+    String userMail;
 
 
     public int getId() {
@@ -41,23 +41,23 @@ public class Tour {
         return badgeCode;
     }
 
-    public int getEmployeeFk() {
-        return employeeFk;
+    public String getEmployeeFk() {
+        return employeeMail;
     }
 
-    public int getUserFk() {
-        return userFk;
+    public String getUserFk() {
+        return userMail;
     }
 
-    public Tour(int id, String startDateTime, String endDateTime, int duration, String status, int badgeCode, int employeeFk, int userFk) {
+    public Tour(int id, String startDateTime, String endDateTime, int duration, String status, int badgeCode, String employeeMail, String userMail) {
         this.id = id;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.duration = duration;
         this.status = status;
         this.badgeCode = badgeCode;
-        this.employeeFk = employeeFk;
-        this.userFk = userFk;
+        this.employeeMail = employeeMail;
+        this.userMail = userMail;
     }
 
 
