@@ -62,8 +62,7 @@ public class AddUserResource {
         else {
             messaggioConferma = "L'utente è stato anagrafato";
             String encodedMessage = URLEncoder.encode(messaggioConferma, StandardCharsets.UTF_8);
-            int lastId = visitManager.getLastId();
-            visitManager.addUserToFile(name, surname, email, lastId);
+            visitManager.addUserToFile(name, surname, email);
             return Response.seeOther(URI.create("/addUser?message_c=" + encodedMessage)).build();
         }
     }

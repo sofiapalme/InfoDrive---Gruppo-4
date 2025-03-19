@@ -8,32 +8,6 @@ import java.nio.file.Paths;
 public class VisitManager {
     private static final String USERS_FILE_PATH = Paths.get("files", "users.csv").toString();
 
-    public int getLastId() {
-        int lastId = 0;
-        File file = new File(USERS_FILE_PATH);
-
-        if (file.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(";");
-                    if (parts.length > 3) {
-                        try {
-                            int id = Integer.parseInt(parts[3]);
-                            if (id > lastId) {
-                                lastId = id;
-                            }
-                        } catch (NumberFormatException ignored) {
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return lastId;
-    }
-
     public boolean emailExists(String email) {
         File file = new File(USERS_FILE_PATH);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -50,11 +24,10 @@ public class VisitManager {
         return false;
     }
 
-    public void addUserToFile(String name, String surname, String email, int lastId) {
+    public void addUserToFile(String name, String surname, String email) {
         if (emailExists(email)) {
             return;
         }
-        int newId = lastId + 1;
         File file = new File(USERS_FILE_PATH);
         try (FileWriter w = new FileWriter(file, true);
              BufferedWriter bw = new BufferedWriter(w)) {
@@ -62,7 +35,8 @@ public class VisitManager {
             if (file.length() == 0) {
                 bw.write("Nome;Cognome;Email;ID\n");
             }
-            bw.write(name + ";" + surname + ";" + email + ";" + newId + "\n");
+            bw.write(name + ";" + surname + ";" + email + ";");
+            bw.newLine();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,7 +61,7 @@ public class VisitManager {
                 }
             }
 
-            addUserToFile(name, surname, email, getLastId());
+            addUserToFile(name, surname, email);
             return email;
 
         } catch (IOException e) {
