@@ -2,13 +2,11 @@ package org.example.web.web;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.example.web.service.TourManager;
 import org.example.web.service.VisitManager;
+import org.example.web.web.service.SessionManager;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -19,40 +17,47 @@ public class AddTourResource {
     private final Template addTour;
     private final VisitManager visitManager;
     private final TourManager tourManager;
+    private final SessionManager sessionManager;
 
-    public AddTourResource(Template addTour, VisitManager visitManager, TourManager tourManager) {
+    public AddTourResource(Template addTour, VisitManager visitManager, TourManager tourManager, SessionManager sessionManager) {
         this.addTour = addTour;
         this.visitManager = visitManager;
         this.tourManager = tourManager;
+        this.sessionManager = sessionManager;
     }
 
     @GET
     public TemplateInstance renderAddVisit() {
-        return addTour.instance();
+        return addTour.data("message",null);
     }
 
     @POST
-    public Response processAddVisit(
+    public TemplateInstance processAddVisit(
             @FormParam("name") String name,
             @FormParam("surname") String surname,
             @FormParam("email") String email,
-            @FormParam("startDateTime")String startDateTimeString,
-            @FormParam("endDateTime") String endDateTimeString,
-            @FormParam("estimatedDuration")String durationString,
-            @FormParam("employeeEmail") String employeeEmail
+            @FormParam("startDateTime") String startDateTimeString,
+            @FormParam("estimatedDuration") String durationString,
+            @CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie
     ) {
         String userMail = visitManager.checkUserExistence(name, surname, email);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, formatter);
-        LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, formatter);
 
         int duration = Integer.parseInt(durationString);
 
-        int lastId = tourManager.getLastTourId();
+        String response = tourManager.addTourToFile(startDateTime, "...", duration, 0, sessionManager.getUserFromSession(sessionCookie), userMail);
 
-        tourManager.addTourToFile(startDateTime,endDateTime, duration,  55555, employeeEmail, userMail);
-
-        return Response.seeOther(URI.create("/addTour")).build();
+        return switch (response) {
+            case "Non abbastanza preavviso" ->
+                    addTour.data("message", "Non hai dato abbastanza prevviso per prenotare la visita");
+            case "Visita aggiunta correttamente al file" ->
+                    addTour.data("message", "Visita aggiunta correttamente");
+            case "Errore durante l'aggiunta" ->
+                    addTour.data("message", "Errore durante l'aggiunta");
+            default ->
+                    addTour.data("message", "Case non previsto");
+        };
     }
 }

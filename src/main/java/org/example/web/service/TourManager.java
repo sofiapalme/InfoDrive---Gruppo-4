@@ -39,14 +39,14 @@ public class TourManager {
         return lastId;
     }
 
-    public void addTourToFile(LocalDateTime startDateTime, LocalDateTime endDateTime, int duration, int badgeCode, String employeeMail, String userMail) {
+    public String addTourToFile(LocalDateTime startDateTime, String endDateTime, int duration, Integer badgeCode, String employeeMail, String userMail) {
+        if (!isBookingWithMinimumOneDayNotice(startDateTime)) {
+            return "Non abbastanza preavviso";
+        }
+
         int newId = getLastTourId() + 1;
         String status = "In attesa";
         File file = new File(TOURS_FILE_PATH);
-
-        if (!checkBadgeAvailability(startDateTime, endDateTime)) {
-            return;
-        }
 
         try (FileWriter w = new FileWriter(file, true);
              BufferedWriter bw = new BufferedWriter(w)) {
@@ -55,10 +55,11 @@ public class TourManager {
                 bw.write("id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail\n");
             }
             bw.write(newId + ";" + startDateTime + ";" + endDateTime + ";" + duration + ";" + status + ";" + badgeCode + ";" + employeeMail + ";" + userMail + "\n");
-
+            return "Visita aggiunta correttamente al file";
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "Errore durante l'aggiunta";
     }
 
     private int countBookedTours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
@@ -103,5 +104,12 @@ public class TourManager {
     private boolean isOverlapping(LocalDateTime existingStart, LocalDateTime existingEnd, LocalDateTime start, LocalDateTime end) {
         boolean isOverlap = existingStart.isBefore(end) && existingEnd.isAfter(start);
         return isOverlap;
+    }
+
+    public boolean isBookingWithMinimumOneDayNotice(LocalDateTime startDateTime) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime minimumNoticeTime = startDateTime.minusDays(1);
+
+        return now.isBefore(minimumNoticeTime);
     }
 }
