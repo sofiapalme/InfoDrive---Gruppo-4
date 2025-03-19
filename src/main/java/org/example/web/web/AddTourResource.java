@@ -28,31 +28,37 @@ public class AddTourResource {
 
     @GET
     public TemplateInstance renderAddVisit() {
-        return addTour.instance();
+        return addTour.data("message",null);
     }
 
     @POST
-    public Response processAddVisit(
+    public TemplateInstance processAddVisit(
             @FormParam("name") String name,
             @FormParam("surname") String surname,
             @FormParam("email") String email,
-            @FormParam("startDateTime")String startDateTimeString,
-            @FormParam("endDateTime") String endDateTimeString,
-            @FormParam("estimatedDuration")String durationString,
+            @FormParam("startDateTime") String startDateTimeString,
+            @FormParam("estimatedDuration") String durationString,
             @CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie
     ) {
         String userMail = visitManager.checkUserExistence(name, surname, email);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, formatter);
-        LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, formatter);
+        LocalDateTime endDateTime = startDateTime.plusHours(durationString.equals("1") ? 1 : 2);
 
         int duration = Integer.parseInt(durationString);
 
-        int lastId = tourManager.getLastTourId();
+        String response = tourManager.addTourToFile(startDateTime, endDateTime, duration, 55555, sessionManager.getUserFromSession(sessionCookie), userMail);
 
-        tourManager.addTourToFile(startDateTime,endDateTime, duration,  55555, sessionManager.getUserFromSession(sessionCookie), userMail);
-
-        return Response.seeOther(URI.create("/addTour")).build();
+        return switch (response) {
+            case "Non abbastanza preavviso" ->
+                    addTour.data("message", "Non hai dato abbastanza prevviso per prenotare la visita");
+            case "Visita aggiunta correttamente al file" ->
+                    addTour.data("message", "Visita aggiunta correttamente");
+            case "Errore durante l'aggiunta" ->
+                    addTour.data("message", "Errore durante l'aggiunta");
+            default ->
+                    addTour.data("message", "Case non previsto");
+        };
     }
 }

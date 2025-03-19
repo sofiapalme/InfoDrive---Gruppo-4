@@ -131,9 +131,6 @@
         <label for="startDateTime">Seleziona data e ora inizio visita:</label>
         <input type="datetime-local" id="startDateTime" name="startDateTime" required="required">
         <br>
-        <label for="endDateTime">Seleziona data e ora fine visita:</label>
-        <input type="datetime-local" id="endDateTime" name="endDateTime" required="required">
-        <br>
         <label for="estimatedDuration">Durata stimata (ore):</label>
         <select id="estimatedDuration" name="estimatedDuration">
             <option value="1">1 ora</option>
@@ -144,7 +141,9 @@
             <button type="reset">Cancella</button>
         </div>
     </form>
-</div>
+    {#if message}
+        <h2> {message} </h2>
+    {/if}
 </div>
 </body>
 </html>
