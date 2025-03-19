@@ -24,3 +24,4 @@ id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail
 48;2025-04-05T11:00;2025-04-05T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
 49;2025-04-06T11:00;2025-04-06T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
 50;2025-04-07T11:00;2025-04-07T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
+51;2025-03-19T10:40;2025-03-19T09:40;1;In attesa;55555;mario.rossi@azienda.com;luca.armani@visita-com
