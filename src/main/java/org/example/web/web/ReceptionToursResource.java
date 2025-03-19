@@ -3,9 +3,11 @@ package org.example.web.web;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
 import org.example.web.Tour;
 
 import java.io.*;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -151,5 +153,11 @@ public class ReceptionToursResource {
             }
         }
     }
+    @GET
+    @Path("/redirectToHome")
+    public Response redirectToHome() {
+        return Response.seeOther(URI.create("/receptionProfile")).build();
+    }
 }
+
 
