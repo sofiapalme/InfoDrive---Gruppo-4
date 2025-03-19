@@ -23,88 +23,118 @@
 
         .container {
             background: linear-gradient(to right, #f5f5f5, #ffffff);
-            padding: 25px;
+            padding: 30px;
             border-radius: 20px;
             width: 80%;
-            max-width: 400px;
+            max-width: 750px;
             height: auto;
+            min-height: 450px;
             color: black;
             font-family: Helvetica, HelveticaNeue, Arial, sans-serif;
+            margin-top: 80px;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: right;
+            align-items: flex-end;
             width: 100%;
             height: 100%;
         }
 
-        form input {
+        header {
+            text-align: center;
+            width: 100%;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
             width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid black;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 70px;
+            padding: 0 30px;
+            margin-top: 15px;
+        }
+
+        .left-section, .right-section {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            right: 20px;
+        }
+
+        .left-section label, .right-section label {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .left-section input, .right-section input, .right-section select {
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #f0f0f0;
+            outline: 1px solid #ccc;
+        }
+
+        .left-section input{
+            height: 17.5px;
+        }
+
+
+        .left-section input:focus, .right-section input:focus, .right-section select:focus {
+            outline: 2px solid black;
         }
 
         .containerButton {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            width: 60%
+            justify-content: space-between;
+            gap: 20px;
+            width: 20%;
+            margin-top: 42.5px;
+            margin-left: 57.5px;
         }
 
-        .containerButton button[type="submit"] {
+        .containerButton button {
             background-color: #F0F0F0;
-            border: 1px solid black;
-            padding: 10px 10px;
-            width: 40%;
-            border-radius: 15px;
+            border: none;
+            padding: 10px 15px;
+            width: auto;
+            border-radius: 10px;
             font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            outline: 1px solid #ccc;
         }
 
-        .containerButton button[type="reset"] {
-            background-color: #F0F0F0;
-            border: 1px solid black;
-            padding: 10px 10px;
-            width: 40%;
-            border-radius: 15px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .containerButton button[type="submit"] {
+        .containerButton button:hover {
+            background-color: #d1ffe0;
             transform: scale(1.05);
         }
 
-        .containerButton button[type="reset"]:hover {
-            transform: scale(1.05);
-        }
-
-        .containerButton button[type="submit"] {
+        .containerButton button:active {
+            background-color: #45FF83;
             transform: scale(1);
         }
 
-        .containerButton button[type="reset"]:active {
-            transform: scale(1);
+        .logo {
+            position: absolute;
+            top: 25px;
+            left: 42%;
+            width: 20%;
+            height: auto;
         }
+
 
         @media (max-width: 600px) {
             .container {
                 width: 90%;
             }
 
-            .containerButton button[type="submit"] {
-                width: 100%;
-                margin: 5px 0;
-            }
-
-            .containerButton button[type="reset"] {
+            .containerButton button {
                 width: 100%;
                 margin: 5px 0;
             }
@@ -113,38 +143,44 @@
 
 </head>
 <body>
-<h1>NomeAzienda</h1>
+<img src="Logo.svg" alt="Logo" class="logo">
 <div class="container">
     <form action="/addTour" method="post">
         <header>
             <h2>Aggiungi visita</h2>
         </header>
-        <label for="name">Nomeㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
-            <input type="text" name="name" id="name" required="required"></label>
+        <div class="form-container">
+            <div class="left-section">
+                <label for="name">Nome</label>
+                    <input type="text" name="name" id="name" required="required">
 
-        <label for="surname">Cognomeㅤㅤㅤㅤㅤㅤㅤㅤ
-            <input type="text" name="surname" id="surname" required="required"></label>
 
-        <label for="email">Emailㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
-            <input type="text" name="email" id="email" required="required"></label>
+                <label for="surname">Cognome</label>
+                    <input type="text" name="surname" id="surname" required="required">
 
-        <label for="startDateTime">Seleziona data e ora inizio visita:</label>
-        <input type="datetime-local" id="startDateTime" name="startDateTime" required="required">
-        <br>
-        <label for="endDateTime">Seleziona data e ora fine visita:</label>
-        <input type="datetime-local" id="endDateTime" name="endDateTime" required="required">
-        <br>
-        <label for="estimatedDuration">Durata stimata (ore):</label>
-        <select id="estimatedDuration" name="estimatedDuration">
-            <option value="1">1 ora</option>
-            <option value="2">2 ore</option>
-        </select>
-        <label for="employeeEmail">Inserisci la mail dell'impiegato che seguirà la visita</label>
-        <input type="text" id="employeeEmail" name="employeeEmail" required="required">
-        <div class="containerButton">
-            <button type="submit">Aggiungi</button>
-            <button type="reset">Cancella</button>
+
+                <label for="email">Email</label>
+                    <input type="text" name="email" id="email" required="required">
+
+            </div>
+
+            <div class="right-section">
+                <label for="startDateTime">Seleziona data e ora inizio visita:</label>
+                <input type="datetime-local" id="startDateTime" name="startDateTime" required="required">
+
+
+                <label for="estimatedDuration">Durata stimata (ore):</label>
+                <select id="estimatedDuration" name="estimatedDuration">
+                    <option value="1">1 ora</option>
+                    <option value="2">2 ore</option>
+                </select>
+                <div class="containerButton">
+                    <button type="submit">Aggiungi</button>
+                    <button type="reset">Cancella</button>
+                </div>
+            </div>
         </div>
+
     </form>
 </div>
 </div>

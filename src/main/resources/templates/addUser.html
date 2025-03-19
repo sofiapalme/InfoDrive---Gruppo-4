@@ -28,15 +28,25 @@
     .btn {
       padding: 10px 20px;
       font-size: 16px;
-      border: 1px solid black;
       background: white;
       cursor: pointer;
       border-radius: 8px;
+      border: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #d1ffe0;
+      transform: scale(1.05);
+    }
+
+    .btn:active {
+      background-color: #45FF83;
+      transform: scale(1);
     }
 
     .container {
       background: white;
-      border: 2px solid black;
       border-radius: 10px;
       padding: 20px;
       width: 50%;
@@ -83,7 +93,7 @@
     <span class="azienda" style="color: white">NomeAzienda</span>
     <div class="buttons">
       <form method="POST" action="/logout">
-        <button class="btn">logout</button>
+        <button class="btn">Logout</button>
       </form>
       <form action="/addUser/redirectToHome" method="get">
         <button class="btn" type="submit">Home</button>
