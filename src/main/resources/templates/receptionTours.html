@@ -12,6 +12,24 @@
         background-color: #382673;
     }
 
+    .buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .buttons-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: 1px solid black;
+        background: white;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
     h1 {
         position: absolute;
         top: 0;
@@ -81,6 +99,12 @@
 </style>
 <body>
 <h1>NomeAzienda</h1>
+<form method="POST" action="/logout">
+    <button class="btn">logout</button>
+</form>
+<form action="/receptionTours/redirectToHome" method="get">
+    <button class="btn" type="submit">Home</button>
+</form>
 <h2 style="font-size: 50px">Lista delle visite</h2>
 <div class="filter-wrapper">
     <form action="/receptionTours/getFilteredTours" method="post">
