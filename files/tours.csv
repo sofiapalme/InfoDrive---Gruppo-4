@@ -1,29 +1,29 @@
 id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail
-2;2025-03-02T11:00;2025-03-01T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-25;2025-03-13T11:00;2025-03-13T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-27;2025-03-15T11:00;2025-03-15T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-28;2025-03-16T11:00;2025-03-16T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-29;2025-03-17T11:00;2025-03-17T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-30;2025-03-18T11:00;2025-03-18T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-31;2025-03-19T11:00;2025-03-19T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-32;2025-03-20T11:00;2025-03-20T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-33;2025-03-21T11:00;2025-03-21T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-34;2025-03-22T11:00;2025-03-22T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-35;2025-03-23T11:00;2025-03-23T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-36;2025-03-24T11:00;2025-03-24T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-37;2025-03-25T11:00;2025-03-25T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-38;2025-03-26T11:00;2025-03-26T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-39;2025-03-27T11:00;2025-03-27T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-40;2025-03-28T11:00;2025-03-28T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-41;2025-03-29T11:00;2025-03-29T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-42;2025-03-30T11:00;2025-03-30T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-43;2025-03-31T11:00;2025-03-31T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-44;2025-04-01T11:00;2025-04-01T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-45;2025-04-02T11:00;2025-04-02T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-46;2025-04-03T11:00;2025-04-03T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-48;2025-04-05T11:00;2025-04-05T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-49;2025-04-06T11:00;2025-04-06T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-50;2025-04-07T11:00;2025-04-07T12:00;1;In attesa;55555;mario.rossi@azienda.com;stefano.lombardi@prova.com
-51;2025-03-30T10:49;2025-03-30T11:49;1;In attesa;55555;mario.rossi@azienda.com;luca.armani@visita-com
-52;2025-03-22T11:04;2025-03-22T12:04;1;In attesa;55555;mario.rossi@azienda.com;luca.armani@visita-com
-53;2025-03-22T11:05;2025-03-22T13:05;2;In attesa;55555;mario.rossi@azienda.com;luca.armani@visita-com
+2;2025-03-02T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+25;2025-03-13T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+27;2025-03-15T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+28;2025-03-16T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+29;2025-03-17T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+30;2025-03-18T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+31;2025-03-19T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+32;2025-03-20T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+33;2025-03-21T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+34;2025-03-22T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+35;2025-03-23T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+36;2025-03-24T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+37;2025-03-25T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+38;2025-03-26T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+39;2025-03-27T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+40;2025-03-28T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+41;2025-03-29T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+42;2025-03-30T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+43;2025-03-31T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+44;2025-04-01T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+45;2025-04-02T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+46;2025-04-03T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+48;2025-04-05T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+49;2025-04-06T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+50;2025-04-07T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+51;2025-03-30T10:49; ... ;1;In attesa;0;mario.rossi@azienda.com;luca.armani@visita-com
+52;2025-03-22T11:04; ... ;1;In attesa;0;mario.rossi@azienda.com;luca.armani@visita-com
+53;2025-03-22T11:05; ... ;2;In attesa;0;mario.rossi@azienda.com;luca.armani@visita-com

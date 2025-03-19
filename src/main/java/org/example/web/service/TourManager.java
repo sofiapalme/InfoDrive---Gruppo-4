@@ -39,7 +39,7 @@ public class TourManager {
         return lastId;
     }
 
-    public String addTourToFile(LocalDateTime startDateTime, LocalDateTime endDateTime, int duration, int badgeCode, String employeeMail, String userMail) {
+    public String addTourToFile(LocalDateTime startDateTime, String endDateTime, int duration, Integer badgeCode, String employeeMail, String userMail) {
         if (!isBookingWithMinimumOneDayNotice(startDateTime)) {
             return "Non abbastanza preavviso";
         }

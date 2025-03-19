@@ -44,11 +44,10 @@ public class AddTourResource {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, formatter);
-        LocalDateTime endDateTime = startDateTime.plusHours(durationString.equals("1") ? 1 : 2);
 
         int duration = Integer.parseInt(durationString);
 
-        String response = tourManager.addTourToFile(startDateTime, endDateTime, duration, 55555, sessionManager.getUserFromSession(sessionCookie), userMail);
+        String response = tourManager.addTourToFile(startDateTime, "...", duration, 0, sessionManager.getUserFromSession(sessionCookie), userMail);
 
         return switch (response) {
             case "Non abbastanza preavviso" ->
