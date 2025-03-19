@@ -49,7 +49,7 @@ public class ReceptionProfileResource {
     @GET
     @Path("/redirectToUser")
     public Response redirectToUser() {
-        return Response.seeOther(URI.create("/user")).build();
+        return Response.seeOther(URI.create("/addUser")).build();
     }
 
     @GET
