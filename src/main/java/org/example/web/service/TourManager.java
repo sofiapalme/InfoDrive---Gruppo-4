@@ -40,6 +40,10 @@ public class TourManager {
     }
 
     public void addTourToFile(LocalDateTime startDateTime, LocalDateTime endDateTime, int duration, int badgeCode, String employeeMail, String userMail) {
+        if (!isBookingWithMinimumOneDayNotice(startDateTime)) {
+            return;
+        }
+
         int newId = getLastTourId() + 1;
         String status = "In attesa";
         File file = new File(TOURS_FILE_PATH);
@@ -103,5 +107,12 @@ public class TourManager {
     private boolean isOverlapping(LocalDateTime existingStart, LocalDateTime existingEnd, LocalDateTime start, LocalDateTime end) {
         boolean isOverlap = existingStart.isBefore(end) && existingEnd.isAfter(start);
         return isOverlap;
+    }
+
+    public boolean isBookingWithMinimumOneDayNotice(LocalDateTime startDateTime) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime minimumNoticeTime = startDateTime.minusDays(1);
+
+        return now.isBefore(minimumNoticeTime);
     }
 }
