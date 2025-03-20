@@ -13,14 +13,6 @@
     background-color: #382673;
   }
 
-  .top-right-buttons {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 10px;
-  }
-
   .buttons {
     display: flex;
     gap: 10px;
@@ -37,12 +29,6 @@
     background: white;
     cursor: pointer;
     border-radius: 8px;
-  }
-
-  .top-right-buttons .btn:hover {
-    background-color: #45FF83;
-    color: white;
-    transition: 0.3s;
   }
 
   h1 {
@@ -84,42 +70,27 @@
   }
 
   .tour-wrapper table {
-    background-color: white;
-    width: 100%;
+    background-color: black;
+    width: fit-content;
     height: fit-content;
     border-collapse: separate;
-    border-spacing: 15px;
+    border-spacing: 5px;
   }
 
   .tour-wrapper th, .tour-wrapper td {
     padding: 10px;
     text-align: center;
     vertical-align: middle;
-    color: black;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .tour-wrapper td:hover, .tour-wrapper th:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.05);
+    color: white;
   }
 
   .tour-wrapper th {
-    background-color: #f0f0f0;
+    background-color: #555;
     font-weight: bold;
     position: sticky;
     top: 0;
     z-index: 1;
   }
-  .logo {
-    position: absolute;
-    top: 25px;
-    left: 3%;
-    width: 20%;
-    height: auto;
-  }
-
 
   .tour-wrapper img {
     cursor: pointer;
@@ -128,15 +99,13 @@
   }
 </style>
 <body>
-<img src="Logo.svg" alt="logo" class="logo">
-<div class="top-right-buttons">
-  <form method="POST" action="/logout">
-    <button class="btn">logout</button>
-  </form>
-  <form action="/deleteTour/redirectToHome" method="get">
-    <button class="btn" type="submit">Home</button>
-  </form>
-</div>
+<h1>NomeAzienda</h1>
+<form method="POST" action="/logout">
+  <button class="btn">logout</button>
+</form>
+<form action="/deleteTour/redirectToHome" method="get">
+  <button class="btn" type="submit">Home</button>
+</form>
 <h2 style="font-size: 50px">Lista delle visite</h2>
 <div class="filter-wrapper">
   <form action="/deleteTour/getFilteredTours" method="post">

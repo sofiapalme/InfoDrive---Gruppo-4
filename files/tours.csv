@@ -1,26 +1,73 @@
 id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail
-2;2025-03-02T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-25;2025-03-13T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-27;2025-03-15T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-28;2025-03-16T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-29;2025-03-17T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-30;2025-03-18T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-31;2025-03-19T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-32;2025-03-20T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-33;2025-03-21T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-34;2025-03-22T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-35;2025-03-23T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-36;2025-03-24T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-37;2025-03-25T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-38;2025-03-26T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-39;2025-03-27T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-40;2025-03-28T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-41;2025-03-29T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-42;2025-03-30T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-43;2025-03-31T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-44;2025-04-01T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-45;2025-04-02T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-46;2025-04-03T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-48;2025-04-05T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-49;2025-04-06T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-50;2025-04-07T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+1;2025-03-23T08:00;...;30;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
+2;2025-03-23T08:30;...;30;In attesa;0;mario.rossi@azienda.com;alessandro.verdi@prova.com
+3;2025-03-23T09:00;...;30;In attesa;0;mario.rossi@azienda.com;valentina.bianchi@prova.com
+4;2025-03-23T09:30;...;30;In attesa;0;mario.rossi@azienda.com;alessandro.giordano@prova.com
+5;2025-03-23T10:00;...;30;In attesa;0;mario.rossi@azienda.com;michele.gialli@prova.com
+6;2025-03-23T10:30;...;30;In attesa;0;mario.rossi@azienda.com;stefano.ferrari@prova.com
+7;2025-03-23T11:00;...;30;In attesa;0;mario.rossi@azienda.com;valentina.rossi@prova.com
+8;2025-03-23T11:30;...;30;In attesa;0;mario.rossi@azienda.com;marco.conte@prova.com
+9;2025-03-23T12:00;...;30;In attesa;0;mario.rossi@azienda.com;giulia.mancini@prova.com
+10;2025-03-23T12:30;...;30;In attesa;0;mario.rossi@azienda.com;francesco.corsi@prova.com
+11;2025-03-23T13:00;...;30;In attesa;0;mario.rossi@azienda.com;lucia.pellegrini@prova.com
+12;2025-03-23T13:30;...;30;In attesa;0;mario.rossi@azienda.com;simone.deluca@prova.com
+13;2025-03-23T14:00;...;30;In attesa;0;mario.rossi@azienda.com;elena.galli@prova.com
+14;2025-03-23T14:30;...;30;In attesa;0;mario.rossi@azienda.com;francesco.fricius@gmail.com
+15;2025-03-23T15:00;...;30;In attesa;0;mario.rossi@azienda.com;luca.armani@prova.com
+16;2025-03-23T08:00;...;30;In attesa;0;luca.bianchi@azienda.com;giorgio.armani@prova.com
+30;2025-03-23T15:00;...;30;In attesa;0;luca.bianchi@azienda.com;stefano.lombardi@prova.com
+34;2025-03-23T09:30;...;30;In attesa;0;giulia.verdi@azienda.com;valentina.bianchi@prova.com
+35;2025-03-23T10:00;...;30;In attesa;0;giulia.verdi@azienda.com;giulia.mancini@prova.com
+36;2025-03-23T10:30;...;30;In attesa;0;giulia.verdi@azienda.com;michele.gialli@prova.com
+37;2025-03-23T11:00;...;30;In attesa;0;giulia.verdi@azienda.com;stefano.ferrari@prova.com
+38;2025-03-23T11:30;...;30;In attesa;0;giulia.verdi@azienda.com;valentina.rossi@prova.com
+39;2025-03-23T12:00;...;30;In attesa;0;giulia.verdi@azienda.com;marco.conte@prova.com
+40;2025-03-23T12:30;...;30;In attesa;0;giulia.verdi@azienda.com;simone.deluca@prova.com
+41;2025-03-23T13:00;...;30;In attesa;0;giulia.verdi@azienda.com;elena.galli@prova.com
+42;2025-03-23T13:30;...;30;In attesa;0;giulia.verdi@azienda.com;francesco.fricius@gmail.com
+43;2025-03-23T14:00;...;30;In attesa;0;giulia.verdi@azienda.com;luca.armani@prova.com
+44;2025-03-23T14:30;...;30;In attesa;0;giulia.verdi@azienda.com;giorgio.armani@prova.com
+45;2025-03-23T15:00;...;30;In attesa;0;giulia.verdi@azienda.com;stefano.lombardi@prova.com
+54;2025-03-23T12:00;...;30;In attesa;0;francesca.neri@azienda.com;stefano.lombardi@prova.com
+55;2025-03-23T12:30;...;30;In attesa;0;francesca.neri@azienda.com;alessandro.verdi@prova.com
+56;2025-03-23T13:00;...;30;In attesa;0;francesca.neri@azienda.com;valentina.bianchi@prova.com
+57;2025-03-23T13:30;...;30;In attesa;0;francesca.neri@azienda.com;giulia.mancini@prova.com
+58;2025-03-23T14:00;...;30;In attesa;0;francesca.neri@azienda.com;michele.gialli@prova.com
+59;2025-03-23T14:30;...;30;In attesa;0;francesca.neri@azienda.com;stefano.ferrari@prova.com
+60;2025-03-23T15:00;...;30;In attesa;0;francesca.neri@azienda.com;valentina.rossi@prova.com
+68;2025-03-23T11:30;...;30;In attesa;0;elena.moretti@azienda.com;stefano.lombardi@prova.com
+69;2025-03-23T12:00;...;30;In attesa;0;elena.moretti@azienda.com;alessandro.verdi@prova.com
+70;2025-03-23T12:30;...;30;In attesa;0;elena.moretti@azienda.com;valentina.bianchi@prova.com
+71;2025-03-23T13:00;...;30;In attesa;0;matteo.russo@azienda.com;giulia.mancini@prova.com
+72;2025-03-23T13:30;...;30;In attesa;0;matteo.russo@azienda.com;michele.gialli@prova.com
+73;2025-03-23T14:00;...;30;In attesa;0;matteo.russo@azienda.com;stefano.ferrari@prova.com
+74;2025-03-23T14:30;...;30;In attesa;0;matteo.russo@azienda.com;valentina.rossi@prova.com
+75;2025-03-23T15:00;...;30;In attesa;0;matteo.russo@azienda.com;giorgio.armani@prova.com
+76;2025-03-23T08:00;...;30;In attesa;0;sara.conti@azienda.com;stefano.lombardi@prova.com
+77;2025-03-23T08:30;...;30;In attesa;0;sara.conti@azienda.com;alessandro.verdi@prova.com
+78;2025-03-23T09:00;...;30;In attesa;0;sara.conti@azienda.com;valentina.bianchi@prova.com
+79;2025-03-23T09:30;...;30;In attesa;0;sara.conti@azienda.com;giulia.mancini@prova.com
+80;2025-03-23T10:00;...;30;In attesa;0;sara.conti@azienda.com;michele.gialli@prova.com
+81;2025-03-23T10:30;...;30;In attesa;0;davide.deluca@azienda.com;stefano.ferrari@prova.com
+82;2025-03-23T11:00;...;30;In attesa;0;davide.deluca@azienda.com;valentina.rossi@prova.com
+83;2025-03-23T11:30;...;30;In attesa;0;davide.deluca@azienda.com;giorgio.armani@prova.com
+94;2025-03-23T09:30;...;30;In attesa;0;chiara.barbieri@azienda.com;stefano.lombardi@prova.com
+95;2025-03-23T10:00;...;30;In attesa;0;chiara.barbieri@azienda.com;alessandro.verdi@prova.com
+96;2025-03-23T10:30;...;30;In attesa;0;stefano.romano@azienda.com;valentina.bianchi@prova.com
+97;2025-03-23T11:00;...;30;In attesa;0;stefano.romano@azienda.com;giulia.mancini@prova.com
+98;2025-03-23T11:30;...;30;In attesa;0;stefano.romano@azienda.com;michele.gialli@prova.com
+99;2025-03-23T12:00;...;30;In attesa;0;stefano.romano@azienda.com;stefano.ferrari@prova.com
+100;2025-03-23T12:30;...;30;In attesa;0;stefano.romano@azienda.com;valentina.rossi@prova.com
+101;2025-03-23T13:00;...;30;In attesa;0;martina.ferrari@azienda.com;giorgio.armani@prova.com
+102;2025-03-23T13:30;...;30;In attesa;0;martina.ferrari@azienda.com;stefano.lombardi@prova.com
+104;2025-03-23T14:30;...;30;In attesa;0;martina.ferrari@azienda.com;alessandro.verdi@prova.com
+105;2025-03-23T15:00;...;30;In attesa;0;martina.ferrari@azienda.com;valentina.bianchi@prova.com
+106;2025-03-23T08:00;...;30;In attesa;0;giorgio.fabbri@azienda.com;giulia.mancini@prova.com
+107;2025-03-23T08:30;...;30;In attesa;0;giorgio.fabbri@azienda.com;michele.gialli@prova.com
+108;2025-03-23T09:00;...;30;In attesa;0;giorgio.fabbri@azienda.com;stefano.ferrari@prova.com
+109;2025-03-23T09:30;...;30;In attesa;0;giorgio.fabbri@azienda.com;valentina.rossi@prova.com
+110;2025-03-23T10:00;...;30;In attesa;0;giorgio.fabbri@azienda.com;giorgio.armani@prova.com
+111;2025-03-23T10:30;...;30;In attesa;0;valentina.rinaldi@azienda.com;stefano.lombardi@prova.com
+112;2025-03-23T11:00;...;30;In attesa;0;valentina.rinaldi@azienda.com;alessandro.verdi@prova.com
+113;2025-03-23T11:30;...;30;In attesa;0;valentina.rinaldi@azienda.com;valentina.bianchi@prova.com
+114;2025-03-23T12:00;...;30;In attesa;0;valentina.rinaldi@azienda.com;giulia.mancini@prova.com
