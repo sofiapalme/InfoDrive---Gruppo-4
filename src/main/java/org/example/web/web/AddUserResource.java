@@ -69,8 +69,14 @@ public class AddUserResource {
 
 
     @GET
-    @Path("/redirectToHome")
-    public Response redirectToHome() {
+    @Path("/redirectToHomeReception")
+    public Response redirectToHomeReception() {
         return Response.seeOther(URI.create("/receptionProfile")).build();
+    }
+
+    @GET
+    @Path("/redirectToHomeEmployee")
+    public Response redirectToHomeEmployee() {
+        return Response.seeOther(URI.create("/employeeProfile")).build();
     }
 }
