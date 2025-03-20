@@ -8,9 +8,13 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #382673;
-      text-align: center;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
     header {
@@ -21,6 +25,11 @@
       padding-bottom: 20px;
       font-size: 20px;
       width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #382673;
+      z-index: 1000;
     }
 
     .buttons {
@@ -57,12 +66,14 @@
       border-radius: 10px;
       padding: 20px;
       width: 50%;
-      margin: 50px auto;
+      max-width: 600px;
+      margin-top: 100px;
     }
 
     h2 {
       font-size: 24px;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     input {
@@ -84,16 +95,19 @@
       width: 40%;
       border: 2px solid black;
     }
-    .errorMsg{
+
+    .errorMsg {
       margin-top: 5px;
       color: red;
       font-size: 20px;
     }
-    .confirmMsg{
+
+    .confirmMsg {
       margin-top: 5px;
       color: #382673;
       font-size: 20px;
     }
+
     .logo {
       position: absolute;
       top: 25px;
@@ -101,55 +115,60 @@
       width: 20%;
       height: auto;
     }
+    main {
+      flex-direction: column;
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <img src="Logo.svg" alt="logo" class="logo">
-    <div class="buttons">
-      <form method="POST" action="/logout">
-        <button class="btn">Logout</button>
-      </form>
-      <form action="/addUser/redirectToHomeEmployee" method="get">
-        <button class="btn" type="submit">Home</button>
-      </form>
-    </div>
-  </header>
+<header>
+  <img src="Logo.svg" alt="logo" class="logo">
+  <div class="buttons">
+    <form action="/addUser/redirectToHomeEmployee" method="get">
+      <button class="btn" type="submit">Home</button>
+    </form>
+    <form method="POST" action="/logout">
+      <button class="btn">Logout</button>
+    </form>
+  </div>
+</header>
 
-  <main>
-    <div class="container">
-      <h2>Anagrafa Utente</h2>
-      <form id="anagrafaForm" action="/addUser" method="post">
-        <label for="nome">
-          <input type="text" name="nome" placeholder="Nome" id="nome" required>
-        </label>
-        <label for="cognome">
-          <input type="text" name="cognome" placeholder="Cognome" id="cognome" required>
-        </label>
-        <label for="email">
-          <input type="email" name="email" placeholder="Email" id="email" required>
-        </label>
-        <br>
-        {#if message != null}
-          <p class="errorMsg">{message}</p>
-        {/if}
-        {#if message_c != null}
-          <p class="confirmMsg">{message_c}</p>
-        {/if}
-        <div class="buttons-container">
-          <button type="submit" class="btn big">Anagrafa</button>
-          <button type="reset" class="btn big">Reset</button>
-        </div>
-      </form>
-    </div>
-  </main>
+<main>
+  <div class="container">
+    <h2>Anagrafa Utente</h2>
+    <form id="anagrafaForm" action="/addUser" method="post">
+      <label for="nome">
+        <input type="text" name="nome" placeholder="Nome" id="nome" required>
+      </label>
+      <label for="cognome">
+        <input type="text" name="cognome" placeholder="Cognome" id="cognome" required>
+      </label>
+      <label for="email">
+        <input type="email" name="email" placeholder="Email" id="email" required>
+      </label>
+      <br>
+      {#if message != null}
+        <p class="errorMsg">{message}</p>
+      {/if}
+      {#if message_c != null}
+        <p class="confirmMsg">{message_c}</p>
+      {/if}
+      <div class="buttons-container">
+        <button type="submit" class="btn big">Anagrafa</button>
+        <button type="reset" class="btn big">Reset</button>
+      </div>
+    </form>
+  </div>
+</main>
 
-  <script>
-    window.onpageshow = function(event) {
-      if (event.persisted) {
-        window.location.reload();
-      }
-    };
-  </script>
+<script>
+  window.onpageshow = function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  };
+</script>
 </body>
 </html>
