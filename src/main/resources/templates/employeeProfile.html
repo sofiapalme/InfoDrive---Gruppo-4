@@ -14,11 +14,9 @@
             background-color: #382673;
         }
 
-        h1 {
-            position: absolute;
-            top: 0;
-            left: 5%;
-            color: white;
+        h2 {
+            text-align: center;
+            margin-top: 0;
         }
 
         .container {
@@ -129,29 +127,28 @@
 </head>
 <body>
 <div class="buttons">
-    <form method="POST" action="/logout">
-        <button class="btn">Logout</button>
-    </form>
     <form action="/addUser/redirectToHome" method="get">
         <button class="btn" type="submit">Home</button>
+    </form>
+    <form method="POST" action="/logout">
+        <button class="btn">Logout</button>
     </form>
 </div>
 <img src="/Logo.svg" alt="Logo" class="logo">
 <div class="container">
-    <header><h2>Benvenuto {userName}</h2></header>
-    <div class="containerButton">
+    <h2>Benvenuto {userName}</h2>
 
-        <form id="annullaVisita" action="/deleteTour" method="GET">
-            <button type="submit">Annulla visita</button>
+    <div class="containerButton">
+        <form id="anagrafaForm" action="/addUser" method="GET">
+            <button type="submit">Anagrafa nuovo cliente</button>
         </form>
 
         <form id="aggiungiVisita" action="/addTour" method="GET">
             <button type="submit">Aggiungi visita</button>
         </form>
 
-
-        <form id="anagrafaForm" action="/addUser" method="GET">
-            <button type="submit">Anagrafa nuovo cliente</button>
+        <form id="annullaVisita" action="/deleteTour" method="GET">
+            <button type="submit">Annulla visita</button>
         </form>
     </div>
 </div>
