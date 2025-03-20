@@ -24,13 +24,3 @@ id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail
 48;2025-04-05T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
 49;2025-04-06T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
 50;2025-04-07T11:00; ... ;1;In attesa;0;mario.rossi@azienda.com;stefano.lombardi@prova.com
-51;2025-03-30T10:49; ... ;1;In attesa;0;mario.rossi@azienda.com;luca.armani@prova.com
-52;2025-03-22T11:04; ... ;1;In attesa;0;mario.rossi@azienda.com;luca.armani@prova.com
-80;2025-04-28T10:00; ... ;1;In attesa;0;luca.bianchi@azienda.com;andrea.rossi@prova.com
-81;2025-04-29T14:15; ... ;2;In attesa;0;luca.bianchi@azienda.com;marco.verdi@prova.com
-83;2025-05-01T16:30; ... ;1;In attesa;0;luca.bianchi@azienda.com;giorgio.ferri@prova.com
-84;2025-05-02T12:20; ... ;2;In attesa;0;luca.bianchi@azienda.com;simone.martini@prova.com
-85;2025-05-03T08:50; ... ;1;In attesa;0;luca.bianchi@azienda.com;alessio.bassi@prova.com
-86;2025-05-04T15:10; ... ;1;In attesa;0;luca.bianchi@azienda.com;riccardo.rossi@prova.com
-87;2025-05-05T11:35; ... ;2;In attesa;0;luca.bianchi@azienda.com;emanuele.galli@prova.com
-89;2025-05-07T14:40; ... ;1;In attesa;0;luca.bianchi@azienda.com;matteo.damiani@prova.com
