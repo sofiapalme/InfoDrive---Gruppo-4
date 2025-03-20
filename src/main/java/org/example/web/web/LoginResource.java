@@ -51,7 +51,7 @@ public class LoginResource {
 
         if(result.equals("portineria")) {
             return Response
-                    .seeOther(URI.create("/receptionProfile"))
+                    .seeOther(URI.create("/receptionTours"))
                     .cookie(sessionCookie)
                     .build();
         } else {
