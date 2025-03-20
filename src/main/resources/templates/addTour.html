@@ -147,6 +147,15 @@
             border-radius: 8px;
         }
 
+        .btn:hover {
+            background-color: #d1ffe0;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            background-color: #45FF83;
+            transform: scale(1);
+        }
 
         @media (max-width: 600px) {
             .container {
@@ -164,11 +173,11 @@
 <body>
 <img src="Logo.svg" alt="Logo" class="logo">
 <div class="buttons">
-    <form method="POST" action="/logout">
-        <button class="btn">Logout</button>
-    </form>
     <form action="/addUser/redirectToHomeEmployee" method="get">
         <button class="btn" type="submit">Home</button>
+    </form>
+    <form method="POST" action="/logout">
+        <button class="btn">Logout</button>
     </form>
 </div>
 <div class="container">
