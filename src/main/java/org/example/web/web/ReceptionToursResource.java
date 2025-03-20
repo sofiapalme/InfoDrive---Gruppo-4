@@ -7,6 +7,8 @@ import jakarta.ws.rs.core.Response;
 import org.example.web.Tour;
 import org.example.web.service.BadgeManager;
 import org.example.web.service.TourManager;
+import org.example.web.service.UserManager;
+import org.example.web.web.service.SessionManager;
 
 import java.io.*;
 import java.net.URI;
@@ -26,43 +28,50 @@ public class ReceptionToursResource {
     private final BadgeManager badgeManager;
     private final TourManager tourManager;
     private List<Tour> tourList;
+    private final UserManager userManager;
+    private final SessionManager sessionManager;
 
-    public ReceptionToursResource(Template receptionTours, BadgeManager badgeManager, TourManager tourManager) {
+
+    public ReceptionToursResource(Template receptionTours, BadgeManager badgeManager, TourManager tourManager, UserManager userManager, SessionManager sessionManager) {
         this.receptionTours = receptionTours;
         this.badgeManager = badgeManager;
         this.tourManager = tourManager;
+        this.userManager = userManager;
+        this.sessionManager = sessionManager;
         this.tourList = getToursFromFile();
     }
 
     @GET
-    public TemplateInstance renderReceptionTours() {
+    public TemplateInstance renderReceptionTours(@CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie) {
+        if (sessionCookie == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String userEmail = sessionManager.getUserFromSession(sessionCookie);
+        if (userEmail == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+        if (nomeCognome == null) {
+            nomeCognome = "Utente Sconosciuto";
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(),formatter)));
-        return receptionTours.data("message",null).data("tourList",tourList);
-    }
-
-    @GET
-    @Path("/redirectToHome")
-    public Response redirectToHome() {
-        return Response.seeOther(URI.create("/receptionProfile")).build();
+        tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(), formatter)));
+        return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
     }
 
     @POST
     @Path("/getFilteredTours")
-    public TemplateInstance getFilteredTours(@FormParam("date") String date)
-    {
+    public TemplateInstance getFilteredTours(@FormParam("date") String date) {
         List<Tour> filteredTours = new ArrayList<>();
         tourList.forEach(tour -> {
-            if(tour.getStartDateTime().split("T")[0].equals(date))
-            {
+            if (tour.getStartDateTime().split("T")[0].equals(date)) {
                 filteredTours.add(tour);
             }
         });
-        if(filteredTours.size() > 0)
-        {
-            return receptionTours.data("message",null).data("tourList",filteredTours);
+        if (filteredTours.size() > 0) {
+            return receptionTours.data("message", null).data("tourList", filteredTours);
         }
-        return receptionTours.data("message","Nessuna visita trovata per questa data").data("tourList",null);
+        return receptionTours.data("message", "Nessuna visita trovata per questa data").data("tourList", null);
     }
 
     @POST
@@ -71,11 +80,10 @@ public class ReceptionToursResource {
 
         removeTourById(tourId);
         tourList = getToursFromFile();
-        if(!tourList.isEmpty())
-        {
-            return receptionTours.data("message",null).data("tourList",tourList);
+        if (!tourList.isEmpty()) {
+            return receptionTours.data("message", null).data("tourList", tourList);
         }
-        return receptionTours.data("message","Nessuna visita presente, prenotane di nuove").data("tourList",tourList);
+        return receptionTours.data("message", "Nessuna visita presente, prenotane di nuove").data("tourList", tourList);
     }
 
     @POST
@@ -102,63 +110,51 @@ public class ReceptionToursResource {
     @Path("/endTour")
     public TemplateInstance endTour(@QueryParam("tourId") int tourId) throws IOException {
         String badgeToFree = tourManager.freeBadgeById(String.valueOf(tourId));
-        if(("Visita non ancora incominciata").equals(badgeToFree) || ("Visita già terminata").equals(badgeToFree))
-        {
+        if (("Visita non ancora incominciata").equals(badgeToFree) || ("Visita già terminata").equals(badgeToFree)) {
             tourList = getToursFromFile();
-            return receptionTours.data("message",badgeToFree).data("tourList",tourList);
-        }
-        else
-        {
+            return receptionTours.data("message", badgeToFree).data("tourList", tourList);
+        } else {
             tourList = getToursFromFile();
             badgeManager.freeBadge(badgeToFree);
-            return receptionTours.data("message",null).data("tourList",tourList);
+            return receptionTours.data("message", null).data("tourList", tourList);
         }
     }
 
     @POST
     @Path("/showAll")
-    public TemplateInstance showAllTours()
-    {
-        return receptionTours.data("message",null).data("tourList",tourList);
+    public TemplateInstance showAllTours() {
+        return receptionTours.data("message", null).data("tourList", tourList);
     }
 
 
-    private String getNameAndSurname(String email, String file)
-    {
-        String path = Paths.get("files",file).toString();
+    private String getNameAndSurname(String email, String file) {
+        String path = Paths.get("files", file).toString();
         File f = new File(path);
-        try(BufferedReader br = new BufferedReader(new FileReader(f)))
-        {
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String line;
             br.readLine();
-            while((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 String[] splittedLine = line.split(";");
-                if(splittedLine[2].equals(email))
-                {
+                if (splittedLine[2].equals(email)) {
                     return splittedLine[0] + " " + splittedLine[1];
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private List<Tour> getToursFromFile()
-    {
+    private List<Tour> getToursFromFile() {
         List<Tour> tourList = new ArrayList<>();
-        String path = Paths.get("files","tours.csv").toString();
+        String path = Paths.get("files", "tours.csv").toString();
         File f = new File(path);
 
-        try(BufferedReader br = new BufferedReader(new FileReader(f))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String line;
             String[] splittedLine;
             br.readLine();
-            while ((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 splittedLine = line.split(";");
                 Tour tour = new Tour(
                         Integer.parseInt(splittedLine[0]),
@@ -167,13 +163,12 @@ public class ReceptionToursResource {
                         Integer.parseInt(splittedLine[3]),
                         splittedLine[4],
                         Integer.parseInt(splittedLine[5]),
-                        getNameAndSurname(splittedLine[6],"dipendente.csv"),
-                        getNameAndSurname(splittedLine[7],"users.csv")
+                        getNameAndSurname(splittedLine[6], "dipendente.csv"),
+                        getNameAndSurname(splittedLine[7], "users.csv")
                 );
                 tourList.add(tour);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return tourList;
@@ -196,9 +191,8 @@ public class ReceptionToursResource {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            for(String line : linesToKeep)
-            {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for (String line : linesToKeep) {
                 bw.write(line + "\n");
             }
         }
