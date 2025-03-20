@@ -5,8 +5,8 @@ import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.example.web.Tour;
-import org.example.web.service.UserManager;
-import org.example.web.web.service.SessionManager;
+import org.example.web.service.BadgeManager;
+import org.example.web.service.TourManager;
 
 import java.io.*;
 import java.net.URI;
@@ -23,38 +23,28 @@ import java.util.List;
 @Path("/receptionTours")
 public class ReceptionToursResource {
     private final Template receptionTours;
+    private final BadgeManager badgeManager;
+    private final TourManager tourManager;
     private List<Tour> tourList;
-    private final SessionManager sessionManager;
-    private final UserManager userManager;
 
-    public ReceptionToursResource(Template receptionTours, SessionManager sessionManager, UserManager userManager) {
+    public ReceptionToursResource(Template receptionTours, BadgeManager badgeManager, TourManager tourManager) {
         this.receptionTours = receptionTours;
-        this.sessionManager = sessionManager;
-        this.userManager = userManager;
+        this.badgeManager = badgeManager;
+        this.tourManager = tourManager;
         this.tourList = getToursFromFile();
     }
 
     @GET
-    public TemplateInstance renderReceptionTours(@CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie) {
-        if (sessionCookie == null) {
-            return receptionTours.data("message",null).data("tourList",tourList).data("userName", "Ospite");
-        }
-
-        String userEmail = sessionManager.getUserFromSession(sessionCookie);
-
-        if (userEmail == null) {
-            return receptionTours.data("message",null).data("tourList",tourList).data("userName", "Ospite");
-        }
-
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
-
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
-        }
-
+    public TemplateInstance renderReceptionTours() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(),formatter)));
-        return receptionTours.data("message",null).data("tourList",tourList).data("userName", nomeCognome);
+        return receptionTours.data("message",null).data("tourList",tourList);
+    }
+
+    @GET
+    @Path("/redirectToHome")
+    public Response redirectToHome() {
+        return Response.seeOther(URI.create("/receptionProfile")).build();
     }
 
     @POST
@@ -89,22 +79,49 @@ public class ReceptionToursResource {
     }
 
     @POST
+    @Path("/addBadge")
+    public TemplateInstance addBadge(@QueryParam("tourId") int tourId) throws IOException {
+        String badge = badgeManager.getFirstBadge();
+        if ("No badge available".equals(badge)) {
+            return receptionTours.data("message", badge).data("tourList", tourList);
+        }
+
+        String result = tourManager.updateBadgeById(String.valueOf(tourId), badge);
+        tourList = getToursFromFile();
+
+        if ("Badge assegnato correttamente".equals(result)) {
+            return receptionTours.data("message", null).data("tourList", tourList);
+        } else {
+            // Se il tour è già terminato o in corso, rilascia il badge appena assegnato
+            badgeManager.freeBadge(badge);
+            return receptionTours.data("message", result).data("tourList", tourList);
+        }
+    }
+
+    @POST
+    @Path("/endTour")
+    public TemplateInstance endTour(@QueryParam("tourId") int tourId) throws IOException {
+        String badgeToFree = tourManager.freeBadgeById(String.valueOf(tourId));
+        if(("Visita non ancora incominciata").equals(badgeToFree) || ("Visita già terminata").equals(badgeToFree))
+        {
+            tourList = getToursFromFile();
+            return receptionTours.data("message",badgeToFree).data("tourList",tourList);
+        }
+        else
+        {
+            tourList = getToursFromFile();
+            badgeManager.freeBadge(badgeToFree);
+            return receptionTours.data("message",null).data("tourList",tourList);
+        }
+    }
+
+    @POST
     @Path("/showAll")
     public TemplateInstance showAllTours()
     {
         return receptionTours.data("message",null).data("tourList",tourList);
     }
 
-    @POST
-    @Path("/addBadge")
-    public TemplateInstance addBadge(@QueryParam("tourId") int tourId) throws IOException {
-        if(updateBadgeById(tourId).equals("No badge available"))
-        {
-            return receptionTours.data("message","Nessun badge disponibile").data("tourList",tourList);
-        }
-        tourList = getToursFromFile();
-        return receptionTours.data("message",null).data("tourList",tourList);
-    }
 
     private String getNameAndSurname(String email, String file)
     {
@@ -187,99 +204,4 @@ public class ReceptionToursResource {
         }
     }
 
-    private String updateBadgeById(int id) throws IOException {
-        String path = Paths.get("files", "tours.csv").toString();
-        String header = "id;startDateTime;endDateTime;duration;badgeCode;employeeMail;userMail";
-        List<String> updatedLines = new ArrayList<>();
-        updatedLines.add(header);
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                if((line.split(";")[0].equals(id+""))) {
-                    if(getFirstBadge().equals("Nessun badge disponible"))
-                    {
-                        return "No badge available";
-                    }
-                    String[] splittedLine = line.split(";");
-                    String newLine =
-                            splittedLine[0] + ";"
-                            + splittedLine[1] + ";"
-                            + splittedLine[2] + ";"
-                            + splittedLine[3] + ";"
-                            + "In corso" + ";"
-                            + getFirstBadge() + ";"
-                            + splittedLine[6] + ";"
-                            + splittedLine[7] + ";";
-                    updatedLines.add(newLine);
-                }
-                else
-                {
-                    updatedLines.add(line);
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            for(String line : updatedLines)
-            {
-                bw.write(line + "\n");
-            }
-        }
-        return "File updated";
-    }
-
-    private String getFirstBadge() throws FileNotFoundException {
-        boolean found = false;
-        String path = Paths.get("files", "badge.csv").toString();
-        File f = new File(path);
-        List<String> updatedLines = new ArrayList<>();
-        String header = "badgeCode;status";
-        updatedLines.add(header);
-        String code = null;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] splittedLine = line.split(";");
-                if (!found && splittedLine.length == 2 && splittedLine[1].equals("true")) {
-                    code = splittedLine[0];
-                    updatedLines.add(code + ";" + "false"); // Disattiva il badge
-                    found = true;
-                } else {
-                    updatedLines.add(line); // Mantiene gli altri badge inalterati
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (code == null) {
-            return "Nessun badge disponibile"; // Nessun badge trovato
-        }
-
-        // Scrivi solo se c'è stato un aggiornamento
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            for (String updatedLine : updatedLines) {
-                bw.write(updatedLine);
-                bw.newLine();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return code; // Ritorna il badge assegnato
-    }
-    @GET
-    @Path("/redirectToHome")
-    public Response redirectToHome() {
-        return Response.seeOther(URI.create("/receptionProfile")).build();
-    }
 }
-
-
