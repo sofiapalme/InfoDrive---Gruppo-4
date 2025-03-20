@@ -6,6 +6,9 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class TourManager {
@@ -60,6 +63,148 @@ public class TourManager {
             e.printStackTrace();
         }
         return "Errore durante l'aggiunta";
+    }
+
+    public String updateBadgeById(String id, String badgeCode)
+    {
+        if(badgeCode.equals("No badge available"))
+        {
+            return badgeCode;
+        }
+        File file = new File(TOURS_FILE_PATH);
+        List<String> linesToWrite = new ArrayList<>();
+        String header = "id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail";
+        linesToWrite.add(header);
+        try(BufferedReader br = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] splittedLine = line.split(";");
+                if(splittedLine[0].equals(id)&& splittedLine[4].equals("Terminata"))
+                {
+                    return "Visita già terminata";
+                }
+                else if(splittedLine[0].equals(id) && splittedLine[4].equals("In corso"))
+                {
+                    return "Visita già in corso";
+                }
+                else if(splittedLine[0].equals(id))
+                {
+                    linesToWrite.add(splittedLine[0] + ";" +
+                            splittedLine[1] + ";" +
+                            splittedLine[2] + ";" +
+                            splittedLine[3] + ";" +
+                            "In corso" + ";" +
+                            badgeCode + ";" +
+                            splittedLine[6] + ";" +
+                            splittedLine[7] + ";"
+                    );
+                }
+                else
+                {
+                    linesToWrite.add(line);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        try(BufferedWriter br = new BufferedWriter(new FileWriter(file)))
+        {
+            for(String line : linesToWrite)
+            {
+                br.write(line);
+                br.newLine();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return "Badge assegnato correttamente";
+    }
+
+    public String freeBadgeById(String id){
+        File file = new File(TOURS_FILE_PATH);
+        String badgeToFree = null;
+        List<String> linesToWrite = new ArrayList<>();
+        String header = "id;startDateTime;endDateTime;duration;status;badgeCode;employeeMail;userMail";
+        linesToWrite.add(header);
+        try(BufferedReader br = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] splittedLine = line.split(";");
+                if(splittedLine[0].equals(id) && Objects.equals(splittedLine[4], "Terminata"))
+                {
+                    return "Visita già terminata";
+                }
+                if(splittedLine[0].equals(id) && !Objects.equals(splittedLine[5], "0"))
+                {
+                    badgeToFree = splittedLine[5];
+                    linesToWrite.add(splittedLine[0] + ";" +
+                            splittedLine[1] + ";" +
+                            splittedLine[2] + ";" +
+                            splittedLine[3] + ";" +
+                            "Terminata" + ";" +
+                            0 + ";" +
+                            splittedLine[6] + ";" +
+                            splittedLine[7] + ";"
+                    );
+                }
+                else
+                {
+                    linesToWrite.add(line);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        if(badgeToFree == null)
+        {
+            return "Visita non ancora incominciata";
+        }
+        try(BufferedWriter br = new BufferedWriter(new FileWriter(file)))
+        {
+            for(String line : linesToWrite)
+            {
+                br.write(line);
+                br.newLine();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return badgeToFree;
+    }
+
+    public String getBadgeToFree(String id)
+    {
+        File file = new File(TOURS_FILE_PATH);
+        String badgeToFree = null;
+        try(BufferedReader br = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] splittedLine = line.split(";");
+                if(splittedLine[0].equals(id) && !Objects.equals(splittedLine[5], "0"))
+                {
+                    badgeToFree = splittedLine[5];
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return badgeToFree;
     }
 
     private int countBookedTours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
