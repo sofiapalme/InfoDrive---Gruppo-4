@@ -75,7 +75,6 @@
     color: white;
   }
 
-
   .filter-wrapper{
     margin-bottom: 1rem;
     display: flex;
@@ -104,29 +103,29 @@
   }
 
   .tour-wrapper table {
-    background-color: white; /* Cambia il colore di sfondo della tabella a bianco */
-    width: 100%; /* Imposta la larghezza della tabella */
+    background-color: white;
+    width: 100%;
     height: fit-content;
     border-collapse: separate;
-    border-spacing: 15px; /* Aumenta lo spazio tra le righe */
+    border-spacing: 15px;
   }
 
   .tour-wrapper th, .tour-wrapper td {
     padding: 10px;
     text-align: center;
     vertical-align: middle;
-    color: black; /* Cambia il colore del testo a nero */
-    border-radius: 8px; /* Aggiungi border-radius per arrotondare gli angoli */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Aggiungi transizione per effetto hover */
+    color: black;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
 
   .tour-wrapper td:hover, .tour-wrapper th:hover {
-    background-color: #f0f0f0; /* Cambia il colore di sfondo al passaggio del mouse */
-    transform: scale(1.05); /* Aumenta leggermente la dimensione per effetto hover */
+    background-color: #f0f0f0;
+    transform: scale(1.05);
   }
 
   .tour-wrapper th {
-    background-color: #f0f0f0; /* Colore di sfondo chiaro per le intestazioni */
+    background-color: #f0f0f0;
     font-weight: bold;
     position: sticky;
     top: 0;
@@ -157,7 +156,7 @@
     <button class="btn">Logout</button>
   </form>
 </div>
-<h2 style="font-size: 50px">Lista delle visite</h2>
+<h2 style="font-size: 50px">Le tue visite</h2>
 <div class="filter-wrapper">
   <form action="/deleteTour/getFilteredTours" method="post">
     <label>
