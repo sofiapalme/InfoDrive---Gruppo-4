@@ -63,6 +63,20 @@
       margin-right: auto;
     }
 
+    form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background-color: #f0f0f0;
+        transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+        background-color: #e0e0e0;
+    }
+
     .containerButton {
       display: flex;
       justify-content: center;
@@ -129,7 +143,7 @@
     }
 
     .btn:hover {
-        background-color: #45a049;
+        background-color: #45FF83;
     }
 
     .btn:active {
@@ -149,13 +163,13 @@
       <h2>Benvenuto, {userName}!</h2>
     </header>
     <form action="/receptionProfile/redirectToUser" method="get">
-        <button type="submit" style="width: 100%; padding: 12px; font-size: 18px;">Anagrafa nuovo cliente</button>
+        <button type="submit">Anagrafa nuovo cliente</button>
     </form>
     <form action="/receptionProfile/redirectToTour" method="get">
-        <button type="submit" style="width: 100%; padding: 12px; font-size: 18px;">Visualizza visite</button>
+        <button type="submit">Visualizza visite</button>
     </form>
     <form action="/receptionProfile/redirectToAddTour" method="get">
-        <button type="submit" style="width: 100%; padding: 12px; font-size: 18px;">Aggiungi visite</button>
+        <button type="submit">Aggiungi visite</button>
     </form>
 </div>
 </body>

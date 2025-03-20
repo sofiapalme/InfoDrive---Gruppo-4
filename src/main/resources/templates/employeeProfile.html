@@ -46,13 +46,11 @@
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
-            border: 1px solid black;
             margin-left: auto;
             margin-right: auto;
         }
 
         .containerButton {
-            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -61,12 +59,13 @@
         }
 
         .containerButton button {
-            background-color: #F0F0F0;
-            padding: 10px 10px;
             width: 100%;
-            border-radius: 15px;
-            font-size: 16px;
-            cursor: pointer;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s ease;
         }
 
         .containerButton button:hover {
@@ -140,10 +139,6 @@
     <header><h2>Benvenuto {userName}</h2></header>
     <div class="containerButton">
 
-        <form id="annullaVisita" action="/deleteTour" method="GET">
-            <button type="submit">Annulla visita</button>
-        </form>
-
         <form id="aggiungiVisita" action="/addTour" method="GET">
             <button type="submit">Aggiungi visita</button>
         </form>
@@ -151,6 +146,10 @@
 
         <form id="anagrafaForm" action="/addUser" method="GET">
             <button type="submit">Anagrafa nuovo cliente</button>
+        </form>
+
+        <form id="annullaVisita" action="/deleteTour" method="GET">
+            <button type="submit">Annulla visita</button>
         </form>
     </div>
 </div>
