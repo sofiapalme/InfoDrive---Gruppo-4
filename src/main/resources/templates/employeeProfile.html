@@ -140,7 +140,9 @@
     <header><h2>Benvenuto {userName}</h2></header>
     <div class="containerButton">
 
-        <button>Annulla visita</button>
+        <form id="annullaVisita" action="/deleteTour" method="GET">
+            <button type="submit">Annulla visita</button>
+        </form>
 
         <form id="aggiungiVisita" action="/addTour" method="GET">
             <button type="submit">Aggiungi visita</button>
