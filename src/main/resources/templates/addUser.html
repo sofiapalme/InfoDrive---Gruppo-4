@@ -16,13 +16,16 @@
     header {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 20px;
       font-size: 20px;
+      width: 100%;
     }
 
     .buttons {
       display: flex;
       gap: 10px;
+      margin-left: 85%;
     }
 
     .btn {
@@ -75,6 +78,7 @@
 
     .big {
       width: 40%;
+      border: 2px solid black;
     }
     .errorMsg{
       margin-top: 5px;
@@ -86,11 +90,18 @@
       color: #382673;
       font-size: 20px;
     }
+    .logo {
+      position: absolute;
+      top: 25px;
+      left: 42%;
+      width: 20%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
   <header>
-    <span class="azienda" style="color: white">NomeAzienda</span>
+    <img src="Logo.svg" alt="logo" class="logo">
     <div class="buttons">
       <form method="POST" action="/logout">
         <button class="btn">Logout</button>
