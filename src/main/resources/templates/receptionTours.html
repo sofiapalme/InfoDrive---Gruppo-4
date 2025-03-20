@@ -12,6 +12,12 @@
         background-color: #382673;
     }
 
+    td form{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .buttons-container {
         position: absolute;
         top: 10px;
@@ -47,6 +53,28 @@
     }
     h2 {
         color: white;
+    }
+
+    .modal{
+        position: fixed;
+        width: 50%;
+        height: 60%;
+        left: 27.5%;
+        top: 20%;
+        background-color: red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .modal button{
+        position: absolute;
+        top: 5%;
+        right: 5%;
+        background-color: transparent;
+        border: none;
+        font-size: 35px;
     }
 
 
@@ -117,7 +145,6 @@
         <button class="btn">Logout</button>
     </form>
 </div>
-<h2 style="font-size: 50px">Benvenuto, {userName}!</h2>
 <div class="filter-wrapper">
     <form action="/receptionTours/getFilteredTours" method="post">
         <input type="date" name="date" required="required">
@@ -126,9 +153,13 @@
     <form action="/receptionTours/showAll" method="post">
         <button type="submit"> Mostra tutti </button>
     </form>
+    {#if message}
+        <div class="modal" id="modal">
+            <button onclick="closeModal()"> X </button>
+            <h2>{message}</h2>
+        </div>
+    {/if}
 </div>
-
-{#if !message}
     <div class="tour-wrapper">
         <table>
             <thead>
@@ -140,7 +171,9 @@
                 <th>Badge</th>
                 <th>Dipendente</th>
                 <th>Cliente</th>
-                <th>Azioni</th>
+                <th>Elimina</th>
+                <th>Assegna badge</th>
+                <th>Termina</th>
             </tr>
             </thead>
             <tbody>
@@ -160,14 +193,25 @@
                             </button>
                         </form>
                     </td>
+                    <td>
+                    <form action="/receptionTours/addBadge?tourId={tour.id}" method="post">
+                        <button style="border: none; background-color: transparent;">
+                            <img src="/tag.png" alt="Elimina una visita" style="width:25px; height:25px;">
+                        </button>
+                    </form>
+                    </td>
+                    <td>
+                    <form action="/receptionTours/endTour?tourId={tour.id}" method="post">
+                        <button style="border: none; background-color: transparent">
+                            <img src="/end.png" alt="Elimina una visita" style="width:25px; height:25px;">
+                        </button>
+                    </form>
+                    </td>
                 </tr>
             {/for}
             </tbody>
         </table>
     </div>
-{#else}
-    <h2> {message} </h2>
-{/if}
 <script>
     window.addEventListener("DOMContentLoaded", () => {
         const startDts = document.querySelectorAll(".startDT");
@@ -183,6 +227,10 @@
             endDt.innerText = formattedEndDt;
         });
     });
+    function closeModal()
+    {
+        const modal = document.getElementById("modal").style.display="none";
+    }
 </script>
 </body>
 </html>
