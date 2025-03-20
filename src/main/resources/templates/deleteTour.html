@@ -54,9 +54,15 @@
   }
 
   .top-right-buttons .btn:hover {
+    background-color: #d1ffe0;
+    transform: scale(1.05);
+    color: black;
+  }
+
+  .top-right-buttons .btn:active {
     background-color: #45FF83;
-    color: white;
-    transition: 0.3s;
+    transform: scale(1);
+    color: black;
   }
 
   h1 {
@@ -144,11 +150,11 @@
 <body>
 <img src="Logo.svg" alt="logo" class="logo">
 <div class="top-right-buttons">
-  <form method="POST" action="/logout">
-    <button class="btn">logout</button>
-  </form>
   <form action="/deleteTour/redirectToHome" method="get">
     <button class="btn" type="submit">Home</button>
+  </form>
+  <form method="POST" action="/logout">
+    <button class="btn">Logout</button>
   </form>
 </div>
 <h2 style="font-size: 50px">Lista delle visite</h2>
@@ -159,6 +165,7 @@
     </label>
     <button type="submit"> Filtra </button>
   </form>
+
 </div>
 
 {#if !message}
@@ -166,14 +173,14 @@
     <table>
       <thead>
       <tr>
-        <th>inizio</th>
-        <th>fine</th>
-        <th>durata</th>
-        <th>status</th>
-        <th>badge</th>
-        <th>dipendente</th>
-        <th>cliente</th>
-        <th>azioni</th>
+        <th>Inizio visita</th>
+        <th>Fine visita</th>
+        <th>Durata visita</th>
+        <th>Stato</th>
+        <th>Badge</th>
+        <th>Dipendente</th>
+        <th>Cliente</th>
+        <th>Azioni</th>
       </tr>
       </thead>
       <tbody>
