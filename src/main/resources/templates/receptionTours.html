@@ -12,29 +12,34 @@
         background-color: #382673;
     }
 
-    .buttons {
+    .buttons-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
         display: flex;
         gap: 10px;
-    }
-    .buttons-container {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
     }
     .btn {
         padding: 10px 20px;
         font-size: 16px;
-        border: 1px solid black;
         background: white;
         cursor: pointer;
         border-radius: 8px;
+        border: none; /* Rimuove il bordo dai bottoni */
     }
 
-    h1 {
-        position: absolute;
-        top: 0;
-        left: 5%;
+    .btn:hover {
+        background-color: #45FF83;
         color: white;
+        transition: background-color 0.3s ease;
+    }
+
+    .logo {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        width: 20%;
+        height: auto;
     }
     h2 {
         color: white;
@@ -54,13 +59,13 @@
         height: 3rem;
         font-size: 15px;
         border-radius: 5px;
-        border: 2px solid black;
+        border: none; /* Rimuove il bordo dal selettore della data */
     }
     .filter-wrapper button{
         width: 6rem;
         height: 3.25rem;
         border-radius: 5px;
-        border: 2px solid black;
+        border: none; /* Rimuove il bordo dai bottoni */
     }
 
     .filter-wrapper button:hover{
@@ -69,26 +74,30 @@
     }
 
     .tour-wrapper table {
-        background-color: black;
+        background-color: white;
         width: fit-content;
         height: fit-content;
         border-collapse: separate;
-        border-spacing: 5px;
+        border-spacing: 15px; /* Aumenta lo spazio tra le righe */
+        color: black; /* Imposta il testo in nero */
     }
 
-    .tour-wrapper th, .tour-wrapper td {
-        padding: 10px;
-        text-align: center;
-        vertical-align: middle;
-        color: white;
+    .tour-wrapper tr {
+        border-bottom: 2px solid #ddd; /* Aggiunge una linea di separazione tra le righe */
+    }
+
+    .tour-wrapper td, .tour-wrapper th {
+        padding: 15px; /* Aumenta il padding nelle celle */
+        border-radius: 5px; /* Aggiungi border-radius leggero */
+    }
+
+    .tour-wrapper tbody tr:hover {
+        background-color: #f9f9f9; /* Cambia il colore di sfondo al passaggio del mouse per una maggiore separazione visiva */
     }
 
     .tour-wrapper th {
-        background-color: #555;
+        background-color: #f0f0f0; /* Colore di sfondo chiaro per le intestazioni */
         font-weight: bold;
-        position: sticky;
-        top: 0;
-        z-index: 1;
     }
 
     .tour-wrapper img {
@@ -98,13 +107,15 @@
     }
 </style>
 <body>
-<h1>NomeAzienda</h1>
-<form method="POST" action="/logout">
-    <button class="btn">logout</button>
-</form>
-<form action="/receptionTours/redirectToHome" method="get">
-    <button class="btn" type="submit">Home</button>
-</form>
+<img src="/Logo.svg" alt="Logo" class="logo">
+<div class="buttons-container">
+    <form method="POST" action="/logout">
+        <button class="btn">logout</button>
+    </form>
+    <form action="/receptionTours/redirectToHome" method="get">
+        <button class="btn" type="submit">Home</button>
+    </form>
+</div>
 <h2 style="font-size: 50px">Lista delle visite</h2>
 <div class="filter-wrapper">
     <form action="/receptionTours/getFilteredTours" method="post">

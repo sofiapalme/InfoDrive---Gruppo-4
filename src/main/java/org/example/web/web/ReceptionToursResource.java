@@ -73,6 +73,17 @@ public class ReceptionToursResource {
         return receptionTours.data("message",null).data("tourList",tourList);
     }
 
+    @POST
+    @Path("/addBadge")
+    public TemplateInstance addBadge(@QueryParam("tourId") int tourId) throws IOException {
+        if(updateBadgeById(tourId).equals("No badge available"))
+        {
+            return receptionTours.data("message","Nessun badge disponibile").data("tourList",tourList);
+        }
+        tourList = getToursFromFile();
+        return receptionTours.data("message",null).data("tourList",tourList);
+    }
+
     private String getNameAndSurname(String email, String file)
     {
         String path = Paths.get("files",file).toString();
@@ -152,6 +163,95 @@ public class ReceptionToursResource {
                 bw.write(line + "\n");
             }
         }
+    }
+
+    private String updateBadgeById(int id) throws IOException {
+        String path = Paths.get("files", "tours.csv").toString();
+        String header = "id;startDateTime;endDateTime;duration;badgeCode;employeeMail;userMail";
+        List<String> updatedLines = new ArrayList<>();
+        updatedLines.add(header);
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if((line.split(";")[0].equals(id+""))) {
+                    if(getFirstBadge().equals("Nessun badge disponible"))
+                    {
+                        return "No badge available";
+                    }
+                    String[] splittedLine = line.split(";");
+                    String newLine =
+                            splittedLine[0] + ";"
+                            + splittedLine[1] + ";"
+                            + splittedLine[2] + ";"
+                            + splittedLine[3] + ";"
+                            + "In corso" + ";"
+                            + getFirstBadge() + ";"
+                            + splittedLine[6] + ";"
+                            + splittedLine[7] + ";";
+                    updatedLines.add(newLine);
+                }
+                else
+                {
+                    updatedLines.add(line);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for(String line : updatedLines)
+            {
+                bw.write(line + "\n");
+            }
+        }
+        return "File updated";
+    }
+
+    private String getFirstBadge() throws FileNotFoundException {
+        boolean found = false;
+        String path = Paths.get("files", "badge.csv").toString();
+        File f = new File(path);
+        List<String> updatedLines = new ArrayList<>();
+        String header = "badgeCode;status";
+        updatedLines.add(header);
+        String code = null;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] splittedLine = line.split(";");
+                if (!found && splittedLine.length == 2 && splittedLine[1].equals("true")) {
+                    code = splittedLine[0];
+                    updatedLines.add(code + ";" + "false"); // Disattiva il badge
+                    found = true;
+                } else {
+                    updatedLines.add(line); // Mantiene gli altri badge inalterati
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (code == null) {
+            return "Nessun badge disponibile"; // Nessun badge trovato
+        }
+
+        // Scrivi solo se c'è stato un aggiornamento
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for (String updatedLine : updatedLines) {
+                bw.write(updatedLine);
+                bw.newLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return code; // Ritorna il badge assegnato
     }
     @GET
     @Path("/redirectToHome")
