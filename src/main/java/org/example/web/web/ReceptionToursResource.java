@@ -56,74 +56,138 @@ public class ReceptionToursResource {
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(), formatter)));
+        System.out.println("userName: " + nomeCognome);
         return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
     }
 
     @POST
     @Path("/getFilteredTours")
-    public TemplateInstance getFilteredTours(@FormParam("date") String date) {
+    public TemplateInstance getFilteredTours(@FormParam("date") String date, @CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie) {
+        String userEmail = sessionManager.getUserFromSession(sessionCookie);
+
         List<Tour> filteredTours = new ArrayList<>();
         tourList.forEach(tour -> {
             if (tour.getStartDateTime().split("T")[0].equals(date)) {
                 filteredTours.add(tour);
             }
         });
-        if (filteredTours.size() > 0) {
-            return receptionTours.data("message", null).data("tourList", filteredTours);
+
+        if (userEmail == null) {
+            return receptionTours.data("message", null).data("tourList", filteredTours).data("userName", "Ospite");
         }
-        return receptionTours.data("message", "Nessuna visita trovata per questa data").data("tourList", null);
+        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+        if (nomeCognome == null) {
+            nomeCognome = "Utente Sconosciuto";
+        }
+
+        if (filteredTours.size() > 0) {
+            return receptionTours.data("message", null).data("tourList", filteredTours).data("userName", nomeCognome);
+        }
+        return receptionTours.data("message", "Nessuna visita trovata per questa data").data("tourList", null).data("userName", nomeCognome);
     }
 
     @POST
     @Path("/removeTour")
-    public TemplateInstance removeTour(@QueryParam("tourId") int tourId) throws IOException {
+    public TemplateInstance removeTour(
+            @QueryParam("tourId") int tourId,
+            @CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie
+    ) throws IOException {
+        if (sessionCookie == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String userEmail = sessionManager.getUserFromSession(sessionCookie);
+        if (userEmail == null) {
+            return receptionTours.data("message", "Nessuna visita presente, prenotane di nuove").data("tourList", tourList).data("userName", "Ospite");
+        }
+        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+        if (nomeCognome == null) {
+            nomeCognome = "Utente Sconosciuto";
+        }
 
         removeTourById(tourId);
         tourList = getToursFromFile();
         if (!tourList.isEmpty()) {
-            return receptionTours.data("message", null).data("tourList", tourList);
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
         }
-        return receptionTours.data("message", "Nessuna visita presente, prenotane di nuove").data("tourList", tourList);
+        return receptionTours.data("message", "Nessuna visita presente, prenotane di nuove").data("tourList", tourList).data("userName", nomeCognome);
     }
 
     @POST
     @Path("/addBadge")
-    public TemplateInstance addBadge(@QueryParam("tourId") int tourId) throws IOException {
+    public TemplateInstance addBadge(
+            @QueryParam("tourId") int tourId,
+            @CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie
+    ) throws IOException {
+        if (sessionCookie == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String userEmail = sessionManager.getUserFromSession(sessionCookie);
+        if (userEmail == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+        if (nomeCognome == null) {
+            nomeCognome = "Utente Sconosciuto";
+        }
         String badge = badgeManager.getFirstBadge();
-        if ("No badge available".equals(badge)) {
-            return receptionTours.data("message", badge).data("tourList", tourList);
+        if ("Nessun badge disponibile".equals(badge)) {
+            return receptionTours.data("message", badge).data("tourList", tourList).data("userName", nomeCognome);
         }
 
         String result = tourManager.updateBadgeById(String.valueOf(tourId), badge);
         tourList = getToursFromFile();
 
         if ("Badge assegnato correttamente".equals(result)) {
-            return receptionTours.data("message", null).data("tourList", tourList);
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
         } else {
             // Se il tour è già terminato o in corso, rilascia il badge appena assegnato
             badgeManager.freeBadge(badge);
-            return receptionTours.data("message", result).data("tourList", tourList);
+            return receptionTours.data("message", result).data("tourList", tourList).data("userName", nomeCognome);
         }
     }
 
     @POST
     @Path("/endTour")
-    public TemplateInstance endTour(@QueryParam("tourId") int tourId) throws IOException {
+    public TemplateInstance endTour(@QueryParam("tourId") int tourId,
+                                    @CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie
+    ) throws IOException {
+        if (sessionCookie == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String userEmail = sessionManager.getUserFromSession(sessionCookie);
+        if (userEmail == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+        if (nomeCognome == null) {
+            nomeCognome = "Utente Sconosciuto";
+        }
         String badgeToFree = tourManager.freeBadgeById(String.valueOf(tourId));
         if (("Visita non ancora incominciata").equals(badgeToFree) || ("Visita già terminata").equals(badgeToFree)) {
             tourList = getToursFromFile();
-            return receptionTours.data("message", badgeToFree).data("tourList", tourList);
+            return receptionTours.data("message", badgeToFree).data("tourList", tourList).data("userName", nomeCognome);
         } else {
             tourList = getToursFromFile();
             badgeManager.freeBadge(badgeToFree);
-            return receptionTours.data("message", null).data("tourList", tourList);
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
         }
     }
 
     @POST
     @Path("/showAll")
-    public TemplateInstance showAllTours() {
-        return receptionTours.data("message", null).data("tourList", tourList);
+    public TemplateInstance showAllTours(@CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie) {
+        if (sessionCookie == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String userEmail = sessionManager.getUserFromSession(sessionCookie);
+        if (userEmail == null) {
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
+        }
+        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+        if (nomeCognome == null) {
+            nomeCognome = "Utente Sconosciuto";
+        }
+        return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
     }
 
 

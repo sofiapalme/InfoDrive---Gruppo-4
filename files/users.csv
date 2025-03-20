@@ -1,20 +1,21 @@
-nome;cognome;email;employeeEmail
-Stefano;Lombardi;stefano.lombardi@prova.com
-Alessandro;Verdi;alessandro.verdi@prova.com
-Valentina;Bianchi;valentina.bianchi@prova.com
-Alessandro;Verdi;alessandro.verdi@prova.com
-Alessandro;Giordano;alessandro.giordano@prova.com
-Michele;Gialli;michele.gialli@prova.com
-Stefano;Ferrari;stefano.ferrari@prova.com
-Valentina;Rossi;valentina.rossi@prova.com
-Michele;Gialli;michele.gialli@prova.com
-Marco;Conte;marco.conte@prova.com
-Giulia;Mancini;giulia.mancini@prova.com
-Francesco;Corsi;francesco.corsi@prova.com
-Lucia;Pellegrini;lucia.pellegrini@prova.com
-Simone;DeLuca;simone.deluca@prova.com
-Elena;Galli;elena.galli@prova.com
-Francesco;Culiersi;francesco.fricius@gmail.com
-Luana;Tassone;luca.bianchi@azienda.com
-Luca;Armani;luca.armani@prova.com;
-Giorgio;Armani;giorgio.armani@prova.com;
+nome;cognome;email;emailDipendente
+ Stefano;Lombardi;stefano.lombardi@prova.com;valentina.rinaldi@azienda.com
+ Alessandro;Verdi;alessandro.verdi@prova.com;martina.ferrari@azienda.com
+ Valentina;Bianchi;valentina.bianchi@prova.com;chiara.barbieri@azienda.com
+ Alessandro;Verdi;alessandro.verdi@prova.com;davide.deluca@azienda.com
+ Alessandro;Giordano;alessandro.giordano@prova.com;matteo.russo@azienda.com
+ Michele;Gialli;michele.gialli@prova.com;alessandro.galli@azienda.com
+ Stefano;Ferrari;stefano.ferrari@prova.com;luca.bianchi@azienda.com
+ Valentina;Rossi;valentina.rossi@prova.com;giulia.verdi@azienda.com
+ Michele;Gialli;michele.gialli@prova.com;valentina.rinaldi@azienda.com
+ Marco;Conte;marco.conte@prova.com;martina.ferrari@azienda.com
+ Giulia;Mancini;giulia.mancini@prova.com;chiara.barbieri@azienda.com
+ Francesco;Corsi;francesco.corsi@prova.com;davide.deluca@azienda.com
+ Lucia;Pellegrini;lucia.pellegrini@prova.com;matteo.russo@azienda.com
+ Simone;DeLuca;simone.deluca@prova.com;alessandro.galli@azienda.com
+ Elena;Galli;elena.galli@prova.com;luca.bianchi@azienda.com
+ Francesco;Culiersi;francesco.fricius@gmail.com;giulia.verdi@azienda.com
+ Luana;Tassone;luca.bianchi@azienda.com;valentina.rinaldi@azienda.com
+ Luca;Armani;luca.armani@prova.com;martina.ferrari@azienda.com
+ Giorgio;Armani;giorgio.armani@prova.com;chiara.barbieri@azienda.com
+ Kevin;Gorini;kevin.gorini@prova.com;luca.bianchi@azienda.com

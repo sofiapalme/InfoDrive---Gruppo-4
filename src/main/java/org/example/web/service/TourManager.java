@@ -147,7 +147,7 @@ public class TourManager {
                     badgeToFree = splittedLine[5];
                     linesToWrite.add(splittedLine[0] + ";" +
                             splittedLine[1] + ";" +
-                            splittedLine[2] + ";" +
+                            LocalDateTime.parse(splittedLine[1]).plusHours(Long.valueOf(splittedLine[3])) + ";" +
                             splittedLine[3] + ";" +
                             "Terminata" + ";" +
                             0 + ";" +
