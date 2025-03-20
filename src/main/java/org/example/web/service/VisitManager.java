@@ -24,7 +24,7 @@ public class VisitManager {
         return false;
     }
 
-    public void addUserToFile(String name, String surname, String email) {
+    public void addUserToFile(String name, String surname, String email, String employeeEmail) {
         if (emailExists(email)) {
             return;
         }
@@ -33,9 +33,9 @@ public class VisitManager {
              BufferedWriter bw = new BufferedWriter(w)) {
 
             if (file.length() == 0) {
-                bw.write("Nome;Cognome;Email;ID\n");
+                bw.write("nome;cognome;email;employeeEmail\n");
             }
-            bw.write(name + ";" + surname + ";" + email + ";");
+            bw.write(name + ";" + surname + ";" + email + ";" + employeeEmail);
             bw.newLine();
 
         } catch (IOException e) {
@@ -43,7 +43,7 @@ public class VisitManager {
         }
     }
 
-    public String checkUserExistence(String name, String surname, String email) {
+    public String checkUserExistence(String name, String surname, String email, String employeeEmail) {
         File usersFile = new File(USERS_FILE_PATH);
 
         try (BufferedReader br = new BufferedReader(new FileReader(usersFile))) {
@@ -61,7 +61,7 @@ public class VisitManager {
                 }
             }
 
-            addUserToFile(name, surname, email);
+            addUserToFile(name, surname, email, employeeEmail);
             return email;
 
         } catch (IOException e) {

@@ -39,7 +39,8 @@ public class AddUserResource {
     public Response loadDataOnFile(
             @FormParam("nome") String name,
             @FormParam("cognome") String surname,
-            @FormParam("email") String email
+            @FormParam("email") String email,
+            @CookieParam("Sessione") String idSession
     ) {
         String messaggioErrore = null;
         String messaggioConferma = null;
@@ -62,7 +63,7 @@ public class AddUserResource {
         else {
             messaggioConferma = "L'utente è stato anagrafato";
             String encodedMessage = URLEncoder.encode(messaggioConferma, StandardCharsets.UTF_8);
-            visitManager.addUserToFile(name, surname, email);
+            visitManager.addUserToFile(name, surname, email, sessionManager.getUserFromSession(idSession));
             return Response.seeOther(URI.create("/addUser?message_c=" + encodedMessage)).build();
         }
     }

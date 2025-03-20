@@ -40,7 +40,7 @@ public class AddTourResource {
             @FormParam("estimatedDuration") String durationString,
             @CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie
     ) {
-        String userMail = visitManager.checkUserExistence(name, surname, email);
+        String userMail = visitManager.checkUserExistence(name, surname, email, sessionManager.getUserFromSession(sessionCookie));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, formatter);
