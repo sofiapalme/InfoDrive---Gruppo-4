@@ -5,6 +5,8 @@ import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.example.web.Tour;
+import org.example.web.service.UserManager;
+import org.example.web.web.service.SessionManager;
 
 import java.io.*;
 import java.net.URI;
@@ -22,17 +24,37 @@ import java.util.List;
 public class ReceptionToursResource {
     private final Template receptionTours;
     private List<Tour> tourList;
+    private final SessionManager sessionManager;
+    private final UserManager userManager;
 
-    public ReceptionToursResource(Template receptionTours) {
+    public ReceptionToursResource(Template receptionTours, SessionManager sessionManager, UserManager userManager) {
         this.receptionTours = receptionTours;
+        this.sessionManager = sessionManager;
+        this.userManager = userManager;
         this.tourList = getToursFromFile();
     }
 
     @GET
-    public TemplateInstance renderReceptionTours() {
+    public TemplateInstance renderReceptionTours(@CookieParam(SessionManager.NOME_COOKIE_SESSION) String sessionCookie) {
+        if (sessionCookie == null) {
+            return receptionTours.data("message",null).data("tourList",tourList).data("userName", "Ospite");
+        }
+
+        String userEmail = sessionManager.getUserFromSession(sessionCookie);
+
+        if (userEmail == null) {
+            return receptionTours.data("message",null).data("tourList",tourList).data("userName", "Ospite");
+        }
+
+        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+
+        if (nomeCognome == null) {
+            nomeCognome = "Utente Sconosciuto";
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(),formatter)));
-        return receptionTours.data("message",null).data("tourList",tourList);
+        return receptionTours.data("message",null).data("tourList",tourList).data("userName", nomeCognome);
     }
 
     @POST
