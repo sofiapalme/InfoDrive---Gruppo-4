@@ -14,9 +14,13 @@
   }
 
   .buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     display: flex;
     gap: 10px;
   }
+
   .buttons-container {
     display: flex;
     justify-content: space-around;
@@ -97,22 +101,32 @@
     display: block;
     margin: 0 auto;
   }
+
+  .lg-hm{
+    display: flex;
+    align-content: center;
+  }
 </style>
 <body>
 <h1>NomeAzienda</h1>
-<form method="POST" action="/logout">
-  <button class="btn">logout</button>
-</form>
-<form action="/deleteTour/redirectToHome" method="get">
-  <button class="btn" type="submit">Home</button>
-</form>
-<h2 style="font-size: 50px">Lista delle visite</h2>
+<div class="buttons">
+  <form method="POST" action="/logout">
+    <button class="btn">Logout</button>
+  </form>
+  <form action="/addUser/redirectToHome" method="get">
+    <button class="btn" type="submit">Home</button>
+  </form>
+</div>
+<h2 style="font-size: 50px">Le tue visite</h2>
 <div class="filter-wrapper">
   <form action="/deleteTour/getFilteredTours" method="post">
     <label>
       <input type="date" name="date" required="required">
     </label>
     <button type="submit"> Filtra </button>
+  </form>
+  <form action="/deleteTour/showAll" method="post">
+    <button type="submit"> Mostra tutti </button>
   </form>
 </div>
 
