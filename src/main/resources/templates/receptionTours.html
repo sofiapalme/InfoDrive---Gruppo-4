@@ -53,7 +53,10 @@
     }
     h2 {
         color: white;
+        font-size: 40px;
+        font-weight: bold;
     }
+
 
     .modal{
         position: fixed;
@@ -160,7 +163,7 @@
     {#if message}
         <div class="modal" id="modal">
             <button onclick="closeModal()"> X </button>
-            <h2>{message}</h2>
+            <h1>{message}</h1>
         </div>
     {/if}
 </div>
