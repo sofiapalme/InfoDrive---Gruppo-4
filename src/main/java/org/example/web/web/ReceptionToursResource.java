@@ -56,7 +56,6 @@ public class ReceptionToursResource {
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(), formatter)));
-        System.out.println("userName: " + nameSurname);
         return receptionTours.data("message", null).data("tourList", tourList).data("userName", nameSurname);
     }
 
@@ -187,6 +186,8 @@ public class ReceptionToursResource {
         if (nameSurname == null) {
             nameSurname = "Utente Sconosciuto";
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(), formatter)));
         return receptionTours.data("message", null).data("tourList", tourList).data("userName", nameSurname);
     }
 

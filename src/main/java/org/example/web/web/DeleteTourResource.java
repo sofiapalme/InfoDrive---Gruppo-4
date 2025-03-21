@@ -38,7 +38,6 @@ public class DeleteTourResource {
         sessionManager.checkUserSession(idSession);
 
         String userEmail = sessionManager.getUserFromSession(idSession);
-        LOG.infof("Email del dipendente corrente: %s", userEmail);
 
         List<Tour> filteredTours = tourList.stream()
                 .filter(tour -> {
@@ -100,6 +99,8 @@ public class DeleteTourResource {
                 .filter(tour -> tour.getEmployeeFk().equals(userEmail))
                 .collect(Collectors.toList());
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        filteredTours.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(), formatter)));
         return deleteTour.data("message", null).data("tourList", filteredTours);
     }
 
