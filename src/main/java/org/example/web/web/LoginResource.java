@@ -18,12 +18,12 @@ import java.net.URI;
 public class LoginResource {
 
     private final Template login;
-    private final UserManager utentiManager;
+    private final UserManager userManager;
     private final SessionManager sessionManager;
 
     public LoginResource(Template login, UserManager userManager, SessionManager sessionManager) {
         this.login = login;
-        this.utentiManager = userManager;
+        this.userManager = userManager;
         this.sessionManager = sessionManager;
     }
 
@@ -39,7 +39,7 @@ public class LoginResource {
             @FormParam("password") String password
     ) throws IOException {
         String messaggioErrore = null;
-        String result = utentiManager.loginCheckPassword(email, password);
+        String result = userManager.loginCheckPassword(email, password);
         if (result == null) {
             messaggioErrore = "Email o password non validi";
             return Response.status(Response.Status.UNAUTHORIZED)

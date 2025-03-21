@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ReceptionTours</title>
+    <title>Profilo</title>
 </head><style>
     body{
         padding-top: 40px;
@@ -146,6 +146,9 @@
         <button class="btn">Logout</button>
     </form>
 </div>
+<header>
+    <h2>Benvenuto, {userName}!</h2>
+</header>
 <div class="filter-wrapper">
     <form action="/receptionTours/getFilteredTours" method="post">
         <input type="date" name="date" required="required">

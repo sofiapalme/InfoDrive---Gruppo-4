@@ -147,7 +147,7 @@ public class TourManager {
                     badgeToFree = splittedLine[5];
                     linesToWrite.add(splittedLine[0] + ";" +
                             splittedLine[1] + ";" +
-                            splittedLine[2] + ";" +
+                            LocalDateTime.parse(splittedLine[1]).plusHours(Long.valueOf(splittedLine[3])) + ";" +
                             splittedLine[3] + ";" +
                             "Terminata" + ";" +
                             0 + ";" +
@@ -232,18 +232,6 @@ public class TourManager {
             e.printStackTrace();
         }
         return bookedTours;
-    }
-
-    private int getAvailableBadges() {
-        int availableBadges = 15;
-        return availableBadges;
-    }
-
-    private boolean checkBadgeAvailability(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        int availableBadges = getAvailableBadges();
-        int bookedBadges = countBookedTours(startDateTime, endDateTime);
-
-        return bookedBadges < availableBadges;
     }
 
     private boolean isOverlapping(LocalDateTime existingStart, LocalDateTime existingEnd, LocalDateTime start, LocalDateTime end) {

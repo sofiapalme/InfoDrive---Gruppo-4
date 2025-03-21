@@ -17,7 +17,7 @@ public class UserManager {
     private static final Logger log = LoggerFactory.getLogger(LoginResource.class);
 
     public String loginCheckPassword(String inputEmail, String inputPassword) {
-        String filePath = Paths.get("files", "dipendente.csv").toString();
+        String filePath = Paths.get("files", "employee.csv").toString();
         File f = new File(filePath);
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String line;
@@ -46,8 +46,8 @@ public class UserManager {
         }
         return null;
     }
-    public String getNomeCognomeByEmail(String emailInput) {
-        String filePath = Paths.get("files", "dipendente.csv").toString();
+    public String getNameSurnameByEmail(String emailInput) {
+        String filePath = Paths.get("files", "employee.csv").toString();
         File f = new File(filePath);
 
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {

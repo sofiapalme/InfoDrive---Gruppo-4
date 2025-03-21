@@ -23,7 +23,7 @@ public class EmployeeProfileResource {
         sessionManager.checkUserSession(idSession);
 
         String userEmail = sessionManager.getUserFromSession(idSession);
-        String userName = userManager.getNomeCognomeByEmail(userEmail);
+        String userName = userManager.getNameSurnameByEmail(userEmail);
 
         return employeeProfile.data("userName", userName);
     }
