@@ -37,13 +37,13 @@ public class ReceptionProfileResource {
             return receptionProfile.data("userName", "Ospite");
         }
 
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
+        String nameSurname = userManager.getNameSurnameByEmail(userEmail);
 
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
+        if (nameSurname == null) {
+            nameSurname = "Utente Sconosciuto";
         }
 
-        return receptionProfile.data("userName", nomeCognome);
+        return receptionProfile.data("userName", nameSurname);
     }
 
     @GET

@@ -50,14 +50,14 @@ public class ReceptionToursResource {
         if (userEmail == null) {
             return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
         }
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
+        String nameSurname = userManager.getNameSurnameByEmail(userEmail);
+        if (nameSurname == null) {
+            nameSurname = "Utente Sconosciuto";
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         tourList.sort(Comparator.comparing(tour -> LocalDateTime.parse(tour.getStartDateTime(), formatter)));
-        System.out.println("userName: " + nomeCognome);
-        return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
+        System.out.println("userName: " + nameSurname);
+        return receptionTours.data("message", null).data("tourList", tourList).data("userName", nameSurname);
     }
 
     @POST
@@ -75,15 +75,15 @@ public class ReceptionToursResource {
         if (userEmail == null) {
             return receptionTours.data("message", null).data("tourList", filteredTours).data("userName", "Ospite");
         }
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
+        String nameSurname = userManager.getNameSurnameByEmail(userEmail);
+        if (nameSurname == null) {
+            nameSurname = "Utente Sconosciuto";
         }
 
         if (filteredTours.size() > 0) {
-            return receptionTours.data("message", null).data("tourList", filteredTours).data("userName", nomeCognome);
+            return receptionTours.data("message", null).data("tourList", filteredTours).data("userName", nameSurname);
         }
-        return receptionTours.data("message", "Nessuna visita trovata per questa data").data("tourList", null).data("userName", nomeCognome);
+        return receptionTours.data("message", "Nessuna visita trovata per questa data").data("tourList", null).data("userName", nameSurname);
     }
 
     @POST
@@ -99,17 +99,17 @@ public class ReceptionToursResource {
         if (userEmail == null) {
             return receptionTours.data("message", "Nessuna visita presente, prenotane di nuove").data("tourList", tourList).data("userName", "Ospite");
         }
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
+        String nameSurname = userManager.getNameSurnameByEmail(userEmail);
+        if (nameSurname == null) {
+            nameSurname = "Utente Sconosciuto";
         }
 
         removeTourById(tourId);
         tourList = getToursFromFile();
         if (!tourList.isEmpty()) {
-            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nameSurname);
         }
-        return receptionTours.data("message", "Nessuna visita presente, prenotane di nuove").data("tourList", tourList).data("userName", nomeCognome);
+        return receptionTours.data("message", "Nessuna visita presente, prenotane di nuove").data("tourList", tourList).data("userName", nameSurname);
     }
 
     @POST
@@ -125,24 +125,24 @@ public class ReceptionToursResource {
         if (userEmail == null) {
             return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
         }
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
+        String nameSurname = userManager.getNameSurnameByEmail(userEmail);
+        if (nameSurname == null) {
+            nameSurname = "Utente Sconosciuto";
         }
         String badge = badgeManager.getFirstBadge();
         if ("Nessun badge disponibile".equals(badge)) {
-            return receptionTours.data("message", badge).data("tourList", tourList).data("userName", nomeCognome);
+            return receptionTours.data("message", badge).data("tourList", tourList).data("userName", nameSurname);
         }
 
         String result = tourManager.updateBadgeById(String.valueOf(tourId), badge);
         tourList = getToursFromFile();
 
         if ("Badge assegnato correttamente".equals(result)) {
-            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nameSurname);
         } else {
             // Se il tour è già terminato o in corso, rilascia il badge appena assegnato
             badgeManager.freeBadge(badge);
-            return receptionTours.data("message", result).data("tourList", tourList).data("userName", nomeCognome);
+            return receptionTours.data("message", result).data("tourList", tourList).data("userName", nameSurname);
         }
     }
 
@@ -158,18 +158,18 @@ public class ReceptionToursResource {
         if (userEmail == null) {
             return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
         }
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
+        String nameSurname = userManager.getNameSurnameByEmail(userEmail);
+        if (nameSurname == null) {
+            nameSurname = "Utente Sconosciuto";
         }
         String badgeToFree = tourManager.freeBadgeById(String.valueOf(tourId));
         if (("Visita non ancora incominciata").equals(badgeToFree) || ("Visita già terminata").equals(badgeToFree)) {
             tourList = getToursFromFile();
-            return receptionTours.data("message", badgeToFree).data("tourList", tourList).data("userName", nomeCognome);
+            return receptionTours.data("message", badgeToFree).data("tourList", tourList).data("userName", nameSurname);
         } else {
             tourList = getToursFromFile();
             badgeManager.freeBadge(badgeToFree);
-            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
+            return receptionTours.data("message", null).data("tourList", tourList).data("userName", nameSurname);
         }
     }
 
@@ -183,11 +183,11 @@ public class ReceptionToursResource {
         if (userEmail == null) {
             return receptionTours.data("message", null).data("tourList", tourList).data("userName", "Ospite");
         }
-        String nomeCognome = userManager.getNomeCognomeByEmail(userEmail);
-        if (nomeCognome == null) {
-            nomeCognome = "Utente Sconosciuto";
+        String nameSurname = userManager.getNameSurnameByEmail(userEmail);
+        if (nameSurname == null) {
+            nameSurname = "Utente Sconosciuto";
         }
-        return receptionTours.data("message", null).data("tourList", tourList).data("userName", nomeCognome);
+        return receptionTours.data("message", null).data("tourList", tourList).data("userName", nameSurname);
     }
 
 
@@ -227,7 +227,7 @@ public class ReceptionToursResource {
                         Integer.parseInt(splittedLine[3]),
                         splittedLine[4],
                         Integer.parseInt(splittedLine[5]),
-                        getNameAndSurname(splittedLine[6], "dipendente.csv"),
+                        getNameAndSurname(splittedLine[6], "employee.csv"),
                         getNameAndSurname(splittedLine[7], "users.csv")
                 );
                 tourList.add(tour);
