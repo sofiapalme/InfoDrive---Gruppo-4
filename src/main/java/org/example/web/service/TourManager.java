@@ -234,18 +234,6 @@ public class TourManager {
         return bookedTours;
     }
 
-    private int getAvailableBadges() {
-        int availableBadges = 15;
-        return availableBadges;
-    }
-
-    private boolean checkBadgeAvailability(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        int availableBadges = getAvailableBadges();
-        int bookedBadges = countBookedTours(startDateTime, endDateTime);
-
-        return bookedBadges < availableBadges;
-    }
-
     private boolean isOverlapping(LocalDateTime existingStart, LocalDateTime existingEnd, LocalDateTime start, LocalDateTime end) {
         boolean isOverlap = existingStart.isBefore(end) && existingEnd.isAfter(start);
         return isOverlap;
